@@ -22,7 +22,7 @@ public class PlannerDatabase {
     static {
         try {
             stationsURL = new URL("https://mgwalker.github.io/amtrak-api/stations.json");
-            trainsURL = new URL("https://mgwalker.github.io/amtrak-api/routes.json");
+            trainsURL = new URL("https://mgwalker.github.io/amtrak-api/trains.json");
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -103,18 +103,17 @@ public class PlannerDatabase {
             }
             scanner.close();
             JSONParser parse = new JSONParser();
-            JSONArray lines = (JSONArray) parse.parse(inline);
-            for (int i = 0; i < lines.size(); i++) {
-                JSONObject line = (JSONObject) lines.get(i);
-                String lineName = (String) line.get("route"); //line names (e.g., CalZephyr)
-                JSONArray lineTrainsArray = (JSONArray) line.get("trains"); //multiple trains run one line
-                for (int j = 0; j < lineTrainsArray.size(); j++) {
-                    System.out.println("***" + lineTrainsArray.size());
-                    JSONObject lineTrainObject = (JSONObject) lineTrainsArray.get(j);
-                    Long trainNumber = (Long) lineTrainObject.get("number");
-                    System.out.println(lineName + " " + trainNumber);
-//                    Long lineTrainNumber = (Long) lineTrainObject.get("number");
-//                    System.out.println(lineTrainNumber);
+            JSONArray trains = (JSONArray) parse.parse(inline);
+            for (int i = 0; i < trains.size(); i++) {
+                JSONObject train = (JSONObject) trains.get(i);
+                String trainName = (String) train.get("route"); //line names (e.g., CalZephyr)
+                Long trainNumber = (Long) train.get("number");
+                JSONArray trainStations = (JSONArray) train.get("stations");
+                ArrayList<String> servedStations = new ArrayList<>();
+                for (int j = 0; j < trainStations.size(); j++) {
+                    JSONObject stationAttributes = (JSONObject) trainStations.get(j);
+                    String stationCode = (String) stationAttributes.get("code");
+                    System.out.println(stationCode);
                 }
 //                System.out.println(lineTrainsArray.getFirst());
 
