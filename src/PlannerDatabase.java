@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,8 +17,6 @@ public class PlannerDatabase {
     private static URL trainsURL;
     private static Station[] stations;
     private static String[] stationStrings;
-    private static Map<String, ArrayList<String>> multiStationTrains = new HashMap<>();
-
 
     static {
         try {
@@ -110,29 +109,23 @@ public class PlannerDatabase {
                 Long trainNumber = (Long) train.get("number");
                 JSONArray trainStations = (JSONArray) train.get("stations");
                 ArrayList<String> servedStations = new ArrayList<>();
+                ArrayList<String> stationStatuses = new ArrayList<>();
+                ArrayList<String> remarks = new ArrayList<>();
                 for (int j = 0; j < trainStations.size(); j++) {
                     JSONObject stationAttributes = (JSONObject) trainStations.get(j);
                     String stationCode = (String) stationAttributes.get("code");
-                    System.out.println(stationCode);
+                    servedStations.add(stationCode);
+                    String stationStatus = (String) stationAttributes.get("status");
+                    stationStatuses.add(stationStatus);
+                    JSONObject rawAttributes = (JSONObject) stationAttributes.get("_raw");
+                    String remark = (String) rawAttributes.get("postcmnt");
+                    if (remark == null) {
+                        remark = (String) rawAttributes.get("estarrcmnt");
+                    }
+                    remarks.add(remark);
                 }
-//                System.out.println(lineTrainsArray.getFirst());
-
-//                System.out.println(trainName);
-//                System.out.println(trainObject);
-//                System.out.println(stationsArray);
-//                for (int j = 0; j < stationsArray.size() - 1; j++) {
-//                    JSONObject stationObject = (JSONObject) stationsArray.get(j);
-//                    String stationCode = (String) stationObject.get("code");
-//                    multiStationTrains.put(trainName, new ArrayList<>());
-//                    multiStationTrains.get(trainName).add(stationCode);
-//                }
-//                JSONObject stationObject = (JSONObject) stationsArray.get(stationsArray.size() - 1);
-//                String stationCode = (String) stationObject.get("code");
-//                String remark = (String) stationObject.get("_raw.postcmnt");
-//                multiStationTrains.put(trainName, new ArrayList<String>());
-//                multiStationTrains.get(trainName).add(stationCode);
-//                multiStationTrains.get(trainName).add(remark); //add the remark for timeliness at the END of list
-//                System.out.println(multiStationTrains);
+                Train trane = new Train(trainName, Math.toIntExact(trainNumber), servedStations, stationStatuses, remarks);
+                System.out.println(trane);
             }
         }
     }
