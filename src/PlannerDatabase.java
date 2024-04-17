@@ -4,8 +4,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,6 +15,7 @@ public class PlannerDatabase {
     private static URL trainsURL;
     private static Station[] stations;
     private static String[] stationStrings;
+    private static ArrayList<Train> trainsInDatabase = new ArrayList<>();
 
     static {
         try {
@@ -86,6 +85,15 @@ public class PlannerDatabase {
         return null; //should never happen
     }
 
+    public static Station getStationfromCodeString(String stationCodeString) {
+        for (Station station : stations) {
+            if (station.getCode().toString().equals(stationCodeString)) {
+                return station;
+            }
+        }
+        return null;
+    }
+
     public static void storeTrains() throws IOException, ParseException {
         HttpURLConnection connTrains = (HttpURLConnection) trainsURL.openConnection();
         connTrains.setRequestMethod("GET");
@@ -108,13 +116,13 @@ public class PlannerDatabase {
                 String trainName = (String) train.get("route"); //line names (e.g., CalZephyr)
                 Long trainNumber = (Long) train.get("number");
                 JSONArray trainStations = (JSONArray) train.get("stations");
-                ArrayList<String> servedStations = new ArrayList<>();
+                ArrayList<String> servedStationCodes = new ArrayList<>();
                 ArrayList<String> stationStatuses = new ArrayList<>();
                 ArrayList<String> remarks = new ArrayList<>();
                 for (int j = 0; j < trainStations.size(); j++) {
                     JSONObject stationAttributes = (JSONObject) trainStations.get(j);
                     String stationCode = (String) stationAttributes.get("code");
-                    servedStations.add(stationCode);
+                    servedStationCodes.add(stationCode);
                     String stationStatus = (String) stationAttributes.get("status");
                     stationStatuses.add(stationStatus);
                     JSONObject rawAttributes = (JSONObject) stationAttributes.get("_raw");
@@ -124,13 +132,35 @@ public class PlannerDatabase {
                     }
                     remarks.add(remark);
                 }
-                Train trane = new Train(trainName, Math.toIntExact(trainNumber), servedStations, stationStatuses, remarks);
-                System.out.println(trane);
+                ArrayList<Station> servedStations = new ArrayList<>();
+                for (String stationCode : servedStationCodes) {
+                    servedStations.add(getStationfromCodeString(stationCode));
+                }
+                trainsInDatabase.add(
+                        new Train(trainName, Math.toIntExact(trainNumber), servedStations, stationStatuses, remarks));
             }
         }
     }
-    public static Route findRoutesFromStationList(String[] stationStrings) {
-        return null;
+    public static ArrayList<Route> findRoutesFromStationList(String[] stationStrings) {
+        ArrayList<Route> routes = new ArrayList<>();
+        for (int i = 0; i < stationStrings.length - 1; i++) {
+            for (int j = i + 1; j < stationStrings.length; j++) {
+                Station originStationSelection = getStationfromString(stationStrings[i]);
+                Station destinationStationSelection = getStationfromString(stationStrings[j]);
+                for (Train train : trainsInDatabase) {
+                    if (train.getStations().contains(originStationSelection) &&
+                            train.getStations().contains(destinationStationSelection)) {
+                        int originStationIndex = train.getStations().indexOf(originStationSelection);
+                        int destinationStationIndex = train.getStations().indexOf(destinationStationSelection);
+                        if (originStationIndex < destinationStationIndex) {
+                            routes.add(new Route(originStationSelection, destinationStationSelection, train.getName(),
+                                    train.getNumber(), train.getStationStatuses().get(i), train.getRemarks().get(i)));
+                        }
+                    }
+                }
+            }
+        }
+        return routes;
     }
 
     public static Trip[] generateTripsFromRoutes(Route[] userRoutes) {
@@ -145,6 +175,12 @@ public class PlannerDatabase {
                 System.out.println(station);
             }
             storeTrains();
+            for (Train train : trainsInDatabase) {
+                System.out.println(train);
+            }
+            System.out.println(findRoutesFromStationList(new String[]{"ORC--Oregon City, OR", "PDX--Portland, OR"}));
+            System.out.println(findRoutesFromStationList(new String[]{"ORC--Oregon City, OR", "PDX--Portland, OR",
+                    "REN--Rensselaer, IN", "YNY--Yonkers, NY", "RSP--Rouses Point, NY"}));
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }

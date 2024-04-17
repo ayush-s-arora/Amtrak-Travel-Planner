@@ -1,28 +1,28 @@
 import java.util.ArrayList;
 
 public class Train {
-    private String route;
+    private String name;
     private int number;
-    private ArrayList<String> stations;
+    private ArrayList<Station> stations;
     private ArrayList<String> stationStatuses;
     private ArrayList<String> remarks;
     private String status;
 
-    public Train(String route, int number, ArrayList<String> stations, ArrayList<String> stationStatuses,
+    public Train(String route, int number, ArrayList<Station> stations, ArrayList<String> stationStatuses,
                  ArrayList<String> remarks) {
-        this.route = route;
+        this.name = route;
         this.number = number;
         this.stations = stations;
         this.stationStatuses = stationStatuses;
         this.remarks = remarks;
     }
 
-    public String getRoute() {
-        return route;
+    public String getName() {
+        return name;
     }
 
-    public void setRoute(String route) {
-        this.route = route;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getNumber() {
@@ -33,12 +33,28 @@ public class Train {
         this.number = number;
     }
 
-    public ArrayList<String> getStations() {
+    public ArrayList<Station> getStations() {
         return stations;
     }
 
-    public void setStations(ArrayList<String> stations) {
+    public void setStations(ArrayList<Station> stations) {
         this.stations = stations;
+    }
+
+    public ArrayList<String> getStationStatuses() {
+        return stationStatuses;
+    }
+
+    public void setStationStatuses(ArrayList<String> stationStatuses) {
+        this.stationStatuses = stationStatuses;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public ArrayList<String> getRemarks() {
@@ -52,7 +68,7 @@ public class Train {
     @Override
     public String toString() {
         return "Train{" +
-                "route='" + route + '\'' +
+                "route='" + name + '\'' +
                 ", number=" + number +
                 ", stations=" + stations +
                 ", stationStatuses=" + stationStatuses +
