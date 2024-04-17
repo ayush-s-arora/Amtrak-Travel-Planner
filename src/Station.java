@@ -1,6 +1,6 @@
 public class Station {
    private String code;
-    private String name;
+   private String name;
 
     public Station(String code, String name) {
         this.code = code;

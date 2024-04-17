@@ -12,11 +12,13 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
     private JScrollPane stationSelector;
     private JSplitPane jSplitPane;
     private JScrollPane selectedStationsPane;
+    private JButton exploreTravelOptionsButton;
     private static JFrame jf;
 
     public TripPlanner() {
         super("Amtrak Travel Planner: Plan your Trip!");
         jf = new JFrame();
+        jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jf.setContentPane(tripPlanningPanel);
         jf.setSize(640, 480);
         jf.setVisible(true);
@@ -29,6 +31,7 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
             jf.dispose();
             new WelcomeScreen();
         }
+        exploreTravelOptionsButton.setVisible(false);
         jSplitPane.setDividerLocation(0.5);
         stationSelector.setViewportView(trainStations);
         JList<String> selectedStations = null;
@@ -43,19 +46,24 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
                     if (finalTrainStations.getSelectedIndex() == -1) {
                         return;
                     } else {
-                         selectedStation[0] = finalTrainStations.getModel().
+                        selectedStation[0] = finalTrainStations.getModel().
                                 getElementAt(finalTrainStations.getSelectedIndex());
-                         if (selectedStationsArrayList.contains(selectedStation[0])) {
-                             selectedStationsArrayList.remove(selectedStation[0]);
-                         } else {
-                             selectedStationsArrayList.add(selectedStation[0]);
-                         }
+                        if (selectedStationsArrayList.contains(selectedStation[0])) {
+                            selectedStationsArrayList.remove(selectedStation[0]);
+                        } else {
+                            selectedStationsArrayList.add(selectedStation[0]);
+                        }
                         String[] selectedStationsArray = new String[selectedStationsArrayList.size()];
                         for (int i = 0; i < selectedStationsArray.length; i++) {
                             selectedStationsArray[i] = selectedStationsArrayList.get(i);
                         }
                         JList<String> selectedStations = new JList<>(selectedStationsArray);
                         selectedStationsPane.setViewportView(selectedStations);
+                        if (selectedStationsArray.length >= 2) {
+                            exploreTravelOptionsButton.setVisible(true);
+                        } else {
+                            exploreTravelOptionsButton.setVisible(false);
+                        }
                     }
                 }
             }
@@ -74,8 +82,20 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
                     }
                     JList<String> selectedStations = new JList<>(selectedStationsArray);
                     selectedStationsPane.setViewportView(selectedStations);
+                    if (selectedStationsArray.length >= 2) {
+                        exploreTravelOptionsButton.setVisible(true);
+                    } else {
+                        exploreTravelOptionsButton.setVisible(false);
+                    }
                 }
                 lastSelectionIndex = finalTrainStations.getSelectedIndex();
+            }
+        });
+        exploreTravelOptionsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jf.dispose();
+                new TripViewer();
             }
         });
     }
