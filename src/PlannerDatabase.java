@@ -12,6 +12,8 @@ import org.json.simple.parser.ParseException;
 public class PlannerDatabase {
     private static URL stationsURL;
     private static URL trainStatusesURL;
+    private static Station[] stations;
+    private static String[] stationStrings;
 
     static {
         try {
@@ -26,8 +28,8 @@ public class PlannerDatabase {
     public PlannerDatabase() throws MalformedURLException {
     }
 
-    public static String[] getTrainStations() throws IOException, ParseException {
-        ArrayList<String> stationsArrayList = new ArrayList<>();
+    public static Station[] getTrainStations() throws IOException, ParseException {
+        ArrayList<Station> stationsArrayList = new ArrayList<>();
         HttpURLConnection connStations = (HttpURLConnection) stationsURL.openConnection();
         connStations.setRequestMethod("GET");
         connStations.connect();
@@ -48,20 +50,44 @@ public class PlannerDatabase {
                 JSONObject stationObject = (JSONObject) stationArray.get(i);
                 String stationCode = (String) stationObject.get("code");
                 String stationName = (String) stationObject.get("name");
-                stationsArrayList.add(stationCode + " -- " + stationName);
+                Station station = new Station(stationCode, stationName);
+                stationsArrayList.add(station);
             }
         }
-        String[] stations = new String[stationsArrayList.size()];
+        stations = new Station[stationsArrayList.size()];
         for (int i = 0; i < stations.length; i++) {
             stations[i] = stationsArrayList.get(i);
         }
         return stations;
     }
 
+    public static String[] getTrainStationStrings() throws IOException, ParseException {
+        getTrainStations();
+        ArrayList<String> stringsArrayList = new ArrayList<>();
+        for (Station station : stations) {
+            stringsArrayList.add(station.toString());
+        }
+        stationStrings = new String[stringsArrayList.size()];
+        for (int i = 0; i < stationStrings.length; i++) {
+            stationStrings[i] = stringsArrayList.get(i);
+        }
+        return stationStrings;
+    }
+
+    public static Station getStationfromString(String stationString) {
+        for (Station station : stations) {
+            if (station.toString().equals(stationString)) {
+                return station;
+            }
+        }
+        return null; //should never happen
+    }
+
+    //for testing
     public static void main(String[] args) {
         try {
-            String[] stations = getTrainStations();
-            for (String station : stations) {
+            Station[] stations = getTrainStations();
+            for (Station station : stations) {
                 System.out.println(station);
             }
         } catch (IOException | ParseException e) {
