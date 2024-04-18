@@ -184,8 +184,8 @@ public class PlannerDatabase {
                         if (originStationIndex < destinationStationIndex) {
                             routes.add(new Route(originStationSelection, destinationStationSelection, train.getName(),
                                     train.getNumber(), train.getStationStatuses().get(destinationStationIndex),
-                                    (Duration.between(train.getArrivalTimes().get(destinationStationIndex),
-                                            train.getDepartureTimes().get(originStationIndex))),
+                                    (Duration.between(train.getDepartureTimes().get(originStationIndex),
+                                            train.getArrivalTimes().get(destinationStationIndex))),
                                     train.getRemarks().get(destinationStationIndex)));
                         }
                     }
@@ -208,9 +208,9 @@ public class PlannerDatabase {
             for (Train train : trainsInDatabase) {
                 System.out.println(train);
             }
-            System.out.println(findRoutesFromStationList(new String[]{"ORC--Oregon City, OR", "PDX--Portland, OR"}));
-            System.out.println(findRoutesFromStationList(new String[]{"ORC--Oregon City, OR", "PDX--Portland, OR",
+            Trip testTrip = new Trip(findRoutesFromStationList(new String[]{"ORC--Oregon City, OR", "PDX--Portland, OR",
                     "REN--Rensselaer, IN", "YNY--Yonkers, NY", "RSP--Rouses Point, NY"}));
+            System.out.println(testTrip);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }

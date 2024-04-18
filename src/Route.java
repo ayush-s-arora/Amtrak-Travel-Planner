@@ -61,6 +61,26 @@ public class Route {
         this.stationStatus = stationStatus;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public static String formatDuration(Duration duration) {
+        String formattedDuration = "";
+        long hours = duration.toHours();
+        long minutes = duration.minusHours(hours).toMinutes();
+        if (hours == 0) {
+            formattedDuration += minutes + " Minutes";
+        } else {
+            formattedDuration += hours + " Hours " + minutes + " Minutes";
+        }
+        return formattedDuration;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -73,10 +93,10 @@ public class Route {
         if (stationStatus.equalsIgnoreCase("Scheduled") ||
                 stationStatus.equalsIgnoreCase("EnRoute")) {
             return trainName + " #" + trainNumber + ": " + origin.getCode() + " --> " +  destination.getCode() + ", " +
-                    stationStatus.toUpperCase() + " -- " + remark + "\n" + duration;
+                    stationStatus.toUpperCase() + " -- " + remark + "\nTrip Duration: " + formatDuration(duration);
         } else {
             return trainName + " #" + trainNumber + ": " + origin.getCode() + " --> " +  destination.getCode() + ", " +
-                    stationStatus.toUpperCase() + " " + remark + "\n" + duration;
+                    stationStatus.toUpperCase() + " " + remark + "\nTrip Duration: " + formatDuration(duration);
         }
     }
 }
