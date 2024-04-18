@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class WelcomeScreen extends PlannerDriver implements ActionListener {
     private JButton createANewAmtrakButton;
@@ -20,6 +23,25 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 jf.dispose();
                 new TripPlanner();
+            }
+        });
+        loadFromASearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser searchFileChooser = new JFileChooser();
+                searchFileChooser.setCurrentDirectory(new File("."));
+                int searchFileResponse = searchFileChooser.showOpenDialog(null);
+                if (searchFileResponse == JFileChooser.APPROVE_OPTION) {
+                    File searchFile = new File(searchFileChooser.getSelectedFile().getAbsolutePath());
+                    try {
+                        TripPlanner.tripGUISearch(PlannerDatabase.loadSearch(searchFile));
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Error! Unable to read the search" +
+                                        " file."
+                                        + " Please ensure the file is formatted correctly and then try again."
+                                , "Search File Load Failure", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
         });
     }

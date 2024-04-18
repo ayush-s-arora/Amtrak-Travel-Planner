@@ -35,7 +35,7 @@
         </constraints>
         <properties>
           <minimumSize width="181" height="90"/>
-          <text value="Load From a Search File"/>
+          <text value="Load From a Station Search Preset"/>
         </properties>
       </component>
       <component id="d289d" class="javax.swing.JLabel">

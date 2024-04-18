@@ -1,8 +1,9 @@
-import java.io.IOException;
-import java.lang.reflect.Array;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,12 +13,18 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
+import javax.swing.*;
+
 public class PlannerDatabase {
     private static URL stationsURL;
     private static URL trainsURL;
     private static Station[] stations;
     private static String[] stationStrings;
     private static ArrayList<Train> trainsInDatabase = new ArrayList<>();
+    private final static String searchOutputFileString = "Amtrak Travel Planner Search.txt";
+    private final static String resultsOutputFileString = "Amtrak Travel Planner Search Results.txt";
+
 
     static {
         try {
@@ -170,7 +177,9 @@ public class PlannerDatabase {
             }
         }
     }
-    public static ArrayList<Route> findRoutesFromStationList(String[] stationStrings) {
+    public static ArrayList<Route> findRoutesFromStationList(String[] stationStrings) throws IOException,
+            ParseException {
+        storeTrains();
         ArrayList<Route> routes = new ArrayList<>();
         for (int i = 0; i < stationStrings.length - 1; i++) {
             for (int j = i + 1; j < stationStrings.length; j++) {
@@ -195,7 +204,76 @@ public class PlannerDatabase {
         return routes;
     }
 
+    public static void exportNullResults(String[] selectedStationsArray, String searchDateTime)
+            throws FileNotFoundException {
+        FileOutputStream fos = new FileOutputStream(resultsOutputFileString);
+        PrintWriter pw = new PrintWriter(fos);
+        pw.println("Amtrak Travel Planner Search Results" + searchDateTime);
+        pw.println("-----");
+        for (String stationString : selectedStationsArray) {
+            pw.println(stationString);
+        }
+        pw.println("-----");
+        pw.println("No Results Found");
+        pw.close();
+        Path filePath = Paths.get(resultsOutputFileString);
+        JOptionPane.showMessageDialog(null, "Save successful! File saved to " + filePath
+                , "Results Output Successful", JOptionPane.INFORMATION_MESSAGE);
+    }
 
+    public static void exportResults(String[] selectedStationsArray, String searchDateTime, String[] results)
+            throws FileNotFoundException {
+        FileOutputStream fos = new FileOutputStream(resultsOutputFileString);
+        PrintWriter pw = new PrintWriter(fos);
+        pw.println("Amtrak Travel Planner Search Results" + searchDateTime);
+        pw.println("-----");
+        for (String stationString : selectedStationsArray) {
+            pw.println(stationString);
+        }
+        pw.println("-----");
+        for (String result : results) {
+            pw.println(result);
+        }
+        pw.close();
+        Path filePath = Paths.get(resultsOutputFileString);
+        JOptionPane.showMessageDialog(null, "Save successful! File saved to " + filePath
+                , "Results Output Successful", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static void exportSearch(String[] selectedStationsArray, String searchDateTime)
+            throws FileNotFoundException {
+        FileOutputStream fos = new FileOutputStream(resultsOutputFileString);
+        PrintWriter pw = new PrintWriter(fos);
+        pw.println("Amtrak Travel Planner Search " + searchDateTime);
+        pw.println("-----");
+        for (String stationString : selectedStationsArray) {
+            pw.println(stationString);
+        }
+    }
+
+    public static String[] loadSearch(File searchFile) throws Exception {
+        ArrayList<String> searchedStations = new ArrayList<>();
+        FileReader fr = new FileReader(searchFile);
+        BufferedReader bfr = new BufferedReader(fr);
+        String line = bfr.readLine();
+        if (!(line.contains("Amtrak Travel Planner Search "))) {
+            throw new Exception();
+        }
+        line = bfr.readLine();
+        if (!(line.equals("-----"))) {
+            throw new Exception();
+        }
+        line = bfr.readLine();
+        while (line != null) {
+            searchedStations.add(line);
+            line = bfr.readLine();
+        }
+        String[] searchedStationsArray = new String[searchedStations.size()];
+        for (int i = 0; i < searchedStations.size(); i++) {
+            searchedStationsArray[i] = searchedStations.get(i);
+        }
+        return searchedStationsArray;
+    }
 
     //for testing
     public static void main(String[] args) {

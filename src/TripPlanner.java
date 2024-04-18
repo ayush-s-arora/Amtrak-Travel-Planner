@@ -1,7 +1,12 @@
+import org.json.simple.parser.ParseException;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TripPlanner extends PlannerDriver implements ActionListener {
@@ -13,6 +18,7 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
     private JSplitPane jSplitPane;
     private JScrollPane selectedStationsPane;
     private JButton exploreTravelOptionsButton;
+    private String[] selectedStationsArray;
     private static JFrame jf;
 
     public TripPlanner() {
@@ -34,7 +40,6 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
         exploreTravelOptionsButton.setVisible(false);
         jSplitPane.setDividerLocation(0.5);
         stationSelector.setViewportView(trainStations);
-        JList<String> selectedStations = null;
         ArrayList<String> selectedStationsArrayList = new ArrayList();
         assert trainStations != null;
         JList<String> finalTrainStations = trainStations;
@@ -53,7 +58,7 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
                         } else {
                             selectedStationsArrayList.add(selectedStation[0]);
                         }
-                        String[] selectedStationsArray = new String[selectedStationsArrayList.size()];
+                        selectedStationsArray = new String[selectedStationsArrayList.size()];
                         for (int i = 0; i < selectedStationsArray.length; i++) {
                             selectedStationsArray[i] = selectedStationsArrayList.get(i);
                         }
@@ -76,7 +81,7 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
                 if (index != -1 && index == lastSelectionIndex) {
                     finalTrainStations.clearSelection();
                     selectedStationsArrayList.remove(finalTrainStations.getModel().getElementAt(index));
-                    String[] selectedStationsArray = new String[selectedStationsArrayList.size()];
+                    selectedStationsArray = new String[selectedStationsArrayList.size()];
                     for (int i = 0; i < selectedStationsArray.length; i++) {
                         selectedStationsArray[i] = selectedStationsArrayList.get(i);
                     }
@@ -94,10 +99,22 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
         exploreTravelOptionsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jf.dispose();
-                new TripViewer();
+                try {
+                    tripGUISearch(selectedStationsArray);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error! Unable to connect to database."
+                            + " Please check your internet connection and then try submitting again."
+                            , "Database Connection Failure", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
+    }
+    public static void tripGUISearch(String[] stations) throws IOException, ParseException {
+        Trip userTrip = new Trip(PlannerDatabase.findRoutesFromStationList(stations));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        jf.dispose();
+        new TripViewer(userTrip, stations, formatter.format(currentDateTime));
     }
     @Override
     public void actionPerformed(ActionEvent e) {
