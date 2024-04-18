@@ -3,6 +3,8 @@ import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Scanner;
 import org.json.simple.JSONArray;
@@ -118,6 +120,8 @@ public class PlannerDatabase {
                 JSONArray trainStations = (JSONArray) train.get("stations");
                 ArrayList<String> servedStationCodes = new ArrayList<>();
                 ArrayList<String> stationStatuses = new ArrayList<>();
+                ArrayList<Instant> departureTimes = new ArrayList<>();
+                ArrayList<Instant> arrivalTimes = new ArrayList<>();
                 ArrayList<String> remarks = new ArrayList<>();
                 for (int j = 0; j < trainStations.size(); j++) {
                     JSONObject stationAttributes = (JSONObject) trainStations.get(j);
@@ -125,6 +129,30 @@ public class PlannerDatabase {
                     servedStationCodes.add(stationCode);
                     String stationStatus = (String) stationAttributes.get("status");
                     stationStatuses.add(stationStatus);
+                    String departureTime = (String) stationAttributes.get("departureActual");
+                    if (departureTime == null) {
+                        departureTime = (String) stationAttributes.get("departureEstimated");
+                    }
+                    if (departureTime == null) {
+                        departureTime = (String) stationAttributes.get("departureScheduled");
+                    }
+                    if (departureTime == null) {
+                        departureTimes.add(null);
+                    } else {
+                        departureTimes.add(Instant.parse(departureTime));
+                    }
+                    String arrivalTime = (String) stationAttributes.get("arrivalActual");
+                    if (arrivalTime == null) {
+                        arrivalTime = (String) stationAttributes.get("arrivalEstimated");
+                    }
+                    if (arrivalTime == null) {
+                        arrivalTime = (String) stationAttributes.get("arrivalScheduled");
+                    }
+                    if (arrivalTime == null) {
+                        arrivalTimes.add(null);
+                    } else {
+                        arrivalTimes.add(Instant.parse(arrivalTime));
+                    }
                     JSONObject rawAttributes = (JSONObject) stationAttributes.get("_raw");
                     String remark = (String) rawAttributes.get("postcmnt");
                     if (remark == null) {
@@ -137,7 +165,8 @@ public class PlannerDatabase {
                     servedStations.add(getStationfromCodeString(stationCode));
                 }
                 trainsInDatabase.add(
-                        new Train(trainName, Math.toIntExact(trainNumber), servedStations, stationStatuses, remarks));
+                        new Train(trainName, Math.toIntExact(trainNumber), servedStations, stationStatuses,
+                                departureTimes, arrivalTimes, remarks));
             }
         }
     }
@@ -154,7 +183,10 @@ public class PlannerDatabase {
                         int destinationStationIndex = train.getStations().indexOf(destinationStationSelection);
                         if (originStationIndex < destinationStationIndex) {
                             routes.add(new Route(originStationSelection, destinationStationSelection, train.getName(),
-                                    train.getNumber(), train.getStationStatuses().get(i), train.getRemarks().get(i)));
+                                    train.getNumber(), train.getStationStatuses().get(destinationStationIndex),
+                                    (Duration.between(train.getArrivalTimes().get(destinationStationIndex),
+                                            train.getDepartureTimes().get(originStationIndex))),
+                                    train.getRemarks().get(destinationStationIndex)));
                         }
                     }
                 }
@@ -163,9 +195,7 @@ public class PlannerDatabase {
         return routes;
     }
 
-    public static Trip[] generateTripsFromRoutes(Route[] userRoutes) {
-        return null;
-    }
+
 
     //for testing
     public static void main(String[] args) {

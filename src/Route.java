@@ -1,18 +1,23 @@
+import java.time.Duration;
+import java.time.Instant;
+
 public class Route {
     private Station origin;
     private Station destination;
     private String trainName;
     private int trainNumber;
     private String stationStatus;
+    private Duration duration;
     private String remark;
 
     public Route(Station origin, Station destination, String trainName,
-                 int trainNumber, String stationStatus, String remark) {
+                 int trainNumber, String stationStatus, Duration duration, String remark) {
         this.origin = origin;
         this.destination = destination;
         this.trainName = trainName;
         this.trainNumber = trainNumber;
         this.stationStatus = stationStatus;
+        this.duration = duration;
         this.remark = remark;
     }
 
@@ -65,7 +70,13 @@ public class Route {
     }
 
     public String toString() {
-        return trainName + " #" + trainNumber + ": " + origin.getCode() + " --> " +  destination.getCode() + ", " +
-                stationStatus.toUpperCase() + " " + remark;
+        if (stationStatus.equalsIgnoreCase("Scheduled") ||
+                stationStatus.equalsIgnoreCase("EnRoute")) {
+            return trainName + " #" + trainNumber + ": " + origin.getCode() + " --> " +  destination.getCode() + ", " +
+                    stationStatus.toUpperCase() + " -- " + remark + "\n" + duration;
+        } else {
+            return trainName + " #" + trainNumber + ": " + origin.getCode() + " --> " +  destination.getCode() + ", " +
+                    stationStatus.toUpperCase() + " " + remark + "\n" + duration;
+        }
     }
 }

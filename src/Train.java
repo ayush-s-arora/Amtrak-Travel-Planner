@@ -1,3 +1,4 @@
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class Train {
@@ -5,15 +6,18 @@ public class Train {
     private int number;
     private ArrayList<Station> stations;
     private ArrayList<String> stationStatuses;
+    private ArrayList<Instant> departureTimes;
+    private ArrayList<Instant> arrivalTimes;
     private ArrayList<String> remarks;
-    private String status;
 
     public Train(String route, int number, ArrayList<Station> stations, ArrayList<String> stationStatuses,
-                 ArrayList<String> remarks) {
+                 ArrayList<Instant> departureTimes, ArrayList<Instant> arrivalTimes, ArrayList<String> remarks) {
         this.name = route;
         this.number = number;
         this.stations = stations;
         this.stationStatuses = stationStatuses;
+        this.departureTimes = departureTimes;
+        this.arrivalTimes = arrivalTimes;
         this.remarks = remarks;
     }
 
@@ -49,12 +53,20 @@ public class Train {
         this.stationStatuses = stationStatuses;
     }
 
-    public String getStatus() {
-        return status;
+    public ArrayList<Instant> getDepartureTimes() {
+        return departureTimes;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDepartureTimes(ArrayList<Instant> departureTimes) {
+        this.departureTimes = departureTimes;
+    }
+
+    public ArrayList<Instant> getArrivalTimes() {
+        return arrivalTimes;
+    }
+
+    public void setArrivalTimes(ArrayList<Instant> arrivalTimes) {
+        this.arrivalTimes = arrivalTimes;
     }
 
     public ArrayList<String> getRemarks() {
@@ -72,6 +84,8 @@ public class Train {
                 ", number=" + number +
                 ", stations=" + stations +
                 ", stationStatuses=" + stationStatuses +
+                ", departureTimes=" + departureTimes +
+                ", arrivalTimes=" + arrivalTimes +
                 ", remarks=" + remarks;
     }
 }
