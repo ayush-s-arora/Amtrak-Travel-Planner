@@ -22,7 +22,7 @@ public class PlannerDatabase {
     private static Station[] stations;
     private static String[] stationStrings;
     private static ArrayList<Train> trainsInDatabase = new ArrayList<>();
-    private final static String searchOutputFileString = "Amtrak Travel Planner Search.txt";
+    private final static String searchOutputFileString = "Amtrak Travel Planner Search Preset.txt";
     private final static String resultsOutputFileString = "Amtrak Travel Planner Search Results.txt";
 
 
@@ -85,7 +85,8 @@ public class PlannerDatabase {
         return stationStrings;
     }
 
-    public static Station getStationfromString(String stationString) {
+    public static Station getStationfromString(String stationString) throws IOException, ParseException {
+        getTrainStations();
         for (Station station : stations) {
             if (station.toString().equals(stationString)) {
                 return station;
@@ -94,7 +95,8 @@ public class PlannerDatabase {
         return null; //should never happen
     }
 
-    public static Station getStationfromCodeString(String stationCodeString) {
+    public static Station getStationfromCodeString(String stationCodeString) throws IOException, ParseException {
+        getTrainStations();
         for (Station station : stations) {
             if (station.getCode().toString().equals(stationCodeString)) {
                 return station;
@@ -208,7 +210,7 @@ public class PlannerDatabase {
             throws FileNotFoundException {
         FileOutputStream fos = new FileOutputStream(resultsOutputFileString);
         PrintWriter pw = new PrintWriter(fos);
-        pw.println("Amtrak Travel Planner Search Results" + searchDateTime);
+        pw.println("Amtrak Travel Planner Search Results " + "[Search Timestamp: " + searchDateTime + "]");
         pw.println("-----");
         for (String stationString : selectedStationsArray) {
             pw.println(stationString);
@@ -217,38 +219,40 @@ public class PlannerDatabase {
         pw.println("No Results Found");
         pw.close();
         Path filePath = Paths.get(resultsOutputFileString);
-        JOptionPane.showMessageDialog(null, "Save successful! File saved to " + filePath
+        JOptionPane.showMessageDialog(null, "Save successful! File saved to " + filePath + "."
                 , "Results Output Successful", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void exportResults(String[] selectedStationsArray, String searchDateTime, String[] results)
+    public static void exportResults(String[] selectedStationsArray, String searchDateTime, Trip trip)
             throws FileNotFoundException {
         FileOutputStream fos = new FileOutputStream(resultsOutputFileString);
         PrintWriter pw = new PrintWriter(fos);
-        pw.println("Amtrak Travel Planner Search Results" + searchDateTime);
+        pw.println("Amtrak Travel Planner Search Results " + "[Search Timestamp: " + searchDateTime + "]");
         pw.println("-----");
         for (String stationString : selectedStationsArray) {
             pw.println(stationString);
         }
         pw.println("-----");
-        for (String result : results) {
-            pw.println(result);
-        }
+        pw.println(trip);
         pw.close();
         Path filePath = Paths.get(resultsOutputFileString);
-        JOptionPane.showMessageDialog(null, "Save successful! File saved to " + filePath
+        JOptionPane.showMessageDialog(null, "Save successful! File saved to " + filePath + "."
                 , "Results Output Successful", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void exportSearch(String[] selectedStationsArray, String searchDateTime)
             throws FileNotFoundException {
-        FileOutputStream fos = new FileOutputStream(resultsOutputFileString);
+        FileOutputStream fos = new FileOutputStream(searchOutputFileString);
         PrintWriter pw = new PrintWriter(fos);
-        pw.println("Amtrak Travel Planner Search " + searchDateTime);
+        pw.println("Amtrak Travel Planner Search " + "[Search Timestamp: " + searchDateTime + "]");
         pw.println("-----");
         for (String stationString : selectedStationsArray) {
             pw.println(stationString);
         }
+        pw.close();
+        Path filePath = Paths.get(searchOutputFileString);
+        JOptionPane.showMessageDialog(null, "Save successful! File saved to " + filePath + "."
+                , "Search Preset File Output Successful", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static String[] loadSearch(File searchFile) throws Exception {

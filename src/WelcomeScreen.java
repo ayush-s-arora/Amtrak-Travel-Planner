@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -9,7 +10,6 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
     private JButton createANewAmtrakButton;
     private JButton loadFromASearchButton;
     private JPanel welcomePanel;
-    private JPanel tripPlannerPanel;
     private static JFrame jf;
     public WelcomeScreen() {
         super("Amtrak Travel Planner");
@@ -18,6 +18,7 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
         jf.setContentPane(welcomePanel);
         jf.setSize(640, 480);
         jf.setVisible(true);
+
         createANewAmtrakButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,9 +37,11 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
                     try {
                         TripPlanner.tripGUISearch(PlannerDatabase.loadSearch(searchFile));
                     } catch (Exception ex) {
+                        ex.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Error! Unable to read the search" +
                                         " file."
-                                        + " Please ensure the file is formatted correctly and then try again."
+                                        + " Please ensure the file is formatted correctly and then try again." +
+                                        " Make sure to use a Search Preset file and not a Search Results file!"
                                 , "Search File Load Failure", JOptionPane.ERROR_MESSAGE);
                     }
                 }

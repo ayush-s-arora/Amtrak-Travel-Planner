@@ -37,7 +37,7 @@ public class Trip {
             output += route.toString();
             output += "\n";
         }
-        output += "Total Duration: " + Route.formatDuration(this.totalDuration);
+        output += "\n\nTotal Duration: " + Route.formatDuration(this.totalDuration);
         return output;
     }
 }

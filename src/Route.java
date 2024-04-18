@@ -90,13 +90,7 @@ public class Route {
     }
 
     public String toString() {
-        if (stationStatus.equalsIgnoreCase("Scheduled") ||
-                stationStatus.equalsIgnoreCase("EnRoute")) {
-            return trainName + " #" + trainNumber + ": " + origin.getCode() + " --> " +  destination.getCode() + ", " +
-                    stationStatus.toUpperCase() + " -- " + remark + "\nTrip Duration: " + formatDuration(duration);
-        } else {
-            return trainName + " #" + trainNumber + ": " + origin.getCode() + " --> " +  destination.getCode() + ", " +
-                    stationStatus.toUpperCase() + " " + remark + "\nTrip Duration: " + formatDuration(duration);
-        }
+        return trainName + " #" + trainNumber + ": " + origin.getCode() + " --> " +  destination.getCode() + ", " +
+                stationStatus.toUpperCase() + " -- " + remark + "\nTrip Duration: " + formatDuration(duration);
     }
 }

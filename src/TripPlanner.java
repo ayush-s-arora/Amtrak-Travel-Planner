@@ -18,6 +18,7 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
     private JSplitPane jSplitPane;
     private JScrollPane selectedStationsPane;
     private JButton exploreTravelOptionsButton;
+    private JButton returnToMainMenuButton;
     private String[] selectedStationsArray;
     private static JFrame jf;
 
@@ -106,6 +107,13 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
                             + " Please check your internet connection and then try submitting again."
                             , "Database Connection Failure", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+        returnToMainMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jf.dispose();
+                new WelcomeScreen();
             }
         });
     }
