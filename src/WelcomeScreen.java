@@ -10,6 +10,7 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
     private JButton createANewAmtrakButton;
     private JButton loadFromASearchButton;
     private JPanel welcomePanel;
+    private JLabel titleLabel;
     private static JFrame jf;
     public WelcomeScreen() {
         super("Amtrak Travel Planner");
@@ -18,6 +19,7 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
         jf.setContentPane(welcomePanel);
         jf.setSize(640, 480);
         jf.setVisible(true);
+        titleLabel.setFont(new Font("Sans Serif", Font.BOLD, 25));
 
         createANewAmtrakButton.addActionListener(new ActionListener() {
             @Override
@@ -35,9 +37,18 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
                 if (searchFileResponse == JFileChooser.APPROVE_OPTION) {
                     File searchFile = new File(searchFileChooser.getSelectedFile().getAbsolutePath());
                     try {
+                        try {
+                            PlannerDatabase.getTrainStations();
+                            PlannerDatabase.storeTrains();
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Error! Unable to connect to database."
+                                            + " Please check your internet connection and then try submitting again."
+                                    , "Database Connection Failure", JOptionPane.ERROR_MESSAGE);
+                        }
                         TripPlanner.tripGUISearch(PlannerDatabase.loadSearch(searchFile));
+                        jf.dispose();
                     } catch (Exception ex) {
-                        ex.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Error! Unable to read the search" +
                                         " file."
                                         + " Please ensure the file is formatted correctly and then try again." +

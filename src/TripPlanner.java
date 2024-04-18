@@ -102,6 +102,7 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 try {
                     tripGUISearch(selectedStationsArray);
+                    jf.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Error! Unable to connect to database."
                             + " Please check your internet connection and then try submitting again."
@@ -121,7 +122,6 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
         Trip userTrip = new Trip(PlannerDatabase.findRoutesFromStationList(stations));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
         LocalDateTime currentDateTime = LocalDateTime.now();
-        jf.dispose();
         new TripViewer(userTrip, stations, formatter.format(currentDateTime));
     }
     @Override

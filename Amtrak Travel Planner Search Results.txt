@@ -1,0 +1,252 @@
+Amtrak Travel Planner Search Results [Search Timestamp: 04/18/2024 02:36:59]
+-----
+OLW--Olympia-Lacey, WA
+NYF--New York State Fair, NY
+NWK--Newark, NJ
+NWB--New Bedford, MA
+NSF--North Carolina State Fair, NC
+NRO--New Rochelle, NY
+NRK--Newark, DE
+NRG--Northridge, CA
+NPV--Naperville, IL
+NPN--Newport News, VA
+NOR--Norman, OK
+NOL--New Orleans, LA
+NLS--Niles, MI
+NLC--New London, CT
+NIB--New Iberia, LA
+NHV--New Haven, CT
+NHT--Northampton, MA
+NFS--Niagara Falls, ON
+NFL--Niagara Falls, NY
+NFK--Norfolk, VA
+NEW--Newton, KS
+NDL--Needles, CA
+NCR--New Carrollton, MD
+NBU--New Buffalo, MI
+NBN--Newbern-Dyersburg, TN
+NBK--New Brunswick, NJ
+MYU--Seaside-Marina, CA
+MYS--Mystic, CT
+MVW--Mount Vernon, WA
+MVN--Malvern, AR
+MTZ--Martinez, CA
+MTR--Montreal, QC
+MTP--Mount Pleasant, IA
+MSS--Manassas, VA
+MSP--St. Paul-Minneapolis, MN
+MRC--Maricopa, AZ
+MRB--Martinsburg, WV
+MPR--Montpelier-Berlin, VT
+MPK--Moorpark, CA
+MOT--Minot, ND
+MOD--Modesto, CA
+MNG--Montgomery, WV
+MKS--Marks, MS
+MKE--Milwaukee-Downtown, WI
+MKA--Milwaukee Airport-Trains, WI
+MJY--Mount Joy, PA
+MIN--Mineola, TX
+MID--Middletown, PA
+MIA--Miami, FL
+MHL--Marshall, TX
+MET--Metropark, NJ
+MEM--Memphis, TN
+MEI--Meridian, MS
+MDT--Mendota, IL
+MDS--Madison, CT
+MDR--Madera, CA
+MDN--Meriden, CT
+MCK--McCook, NE
+MCI--Michigan City, IN
+MCG--McGregor, TX
+MCD--Merced, CA
+MCB--McComb, MS
+-----
+Coast Starlight #11: OLW --> MTZ, SCHEDULED -- ON TIME
+Trip Duration: 20 Hours 35 Minutes
+Northeast Regional #66: NWK --> NRO, SCHEDULED -- ON TIME
+Trip Duration: 4 Hours 17 Minutes
+Northeast Regional #67: NWK --> NPN, SCHEDULED -- 07 MI EARLY
+Trip Duration: 10 Hours 44 Minutes
+Crescent #19: NWK --> NOL, SCHEDULED -- 50 MI EARLY
+Trip Duration: 30 Hours 34 Minutes
+Northeast Regional #66: NWK --> NLC, SCHEDULED -- 12 MI LATE
+Trip Duration: 6 Hours 29 Minutes
+Northeast Regional #66: NWK --> NHV, SCHEDULED -- 01 MI LATE
+Trip Duration: 5 Hours 28 Minutes
+Northeast Regional #67: NWK --> NCR, SCHEDULED -- ON TIME
+Trip Duration: 5 Hours 53 Minutes
+Northeast Regional #66: NWK --> MYS, SCHEDULED -- 13 MI LATE
+Trip Duration: 6 Hours 43 Minutes
+Crescent #19: NWK --> MSS, DEPARTED -- 2 HR 28 MI LATE
+Trip Duration: 7 Hours 10 Minutes
+Cardinal #51: NWK --> MSS, DEPARTED -- 5 MI LATE
+Trip Duration: 4 Hours 48 Minutes
+Cardinal #51: NWK --> MNG, DEPARTED -- 1 HR 36 MI LATE
+Trip Duration: 14 Hours 19 Minutes
+Silver Service / Palmetto #97: NWK --> MIA, SCHEDULED -- 55 MI EARLY
+Trip Duration: 26 Hours 25 Minutes
+Silver Service / Palmetto #91: NWK --> MIA, SCHEDULED -- 42 MI EARLY
+Trip Duration: 30 Hours 28 Minutes
+Northeast Regional #67: NWK --> MET, DEPARTED -- 7 MI LATE
+Trip Duration: 15 Minutes
+Crescent #19: NWK --> MEI, SCHEDULED -- ON TIME
+Trip Duration: 26 Hours 35 Minutes
+Northeast Regional #67: NRO --> NPN, SCHEDULED -- 07 MI EARLY
+Trip Duration: 11 Hours 51 Minutes
+Northeast Regional #66: NRO --> NLC, SCHEDULED -- 12 MI LATE
+Trip Duration: 2 Hours 11 Minutes
+Northeast Regional #66: NRO --> NHV, SCHEDULED -- 01 MI LATE
+Trip Duration: 1 Hours 10 Minutes
+Northeast Regional #67: NRO --> NCR, SCHEDULED -- ON TIME
+Trip Duration: 7 Hours 0 Minutes
+Northeast Regional #66: NRO --> MYS, SCHEDULED -- 13 MI LATE
+Trip Duration: 2 Hours 25 Minutes
+Northeast Regional #67: NRO --> MET, DEPARTED -- 7 MI LATE
+Trip Duration: 1 Hours 22 Minutes
+Southwest Chief #3: NPV --> NEW, ENROUTE -- 46 MI LATE
+Trip Duration: 11 Hours 58 Minutes
+Southwest Chief #3: NPV --> NEW, DEPARTED -- 15 MI LATE
+Trip Duration: 11 Hours 29 Minutes
+Southwest Chief #3: NPV --> NDL, SCHEDULED -- ON TIME
+Trip Duration: 34 Hours 57 Minutes
+Southwest Chief #3: NPV --> NDL, SCHEDULED -- 39 MI LATE
+Trip Duration: 35 Hours 39 Minutes
+California Zephyr #5: NPV --> MTZ, SCHEDULED -- 26 MI EARLY
+Trip Duration: 51 Hours 11 Minutes
+California Zephyr #5: NPV --> MTZ, SCHEDULED -- 04 HR 33 MI LATE
+Trip Duration: 55 Hours 57 Minutes
+California Zephyr #5: NPV --> MTP, DEPARTED -- 7 MI LATE
+Trip Duration: 3 Hours 36 Minutes
+California Zephyr #5: NPV --> MTP, DEPARTED -- 6 HR 7 MI LATE
+Trip Duration: 9 Hours 20 Minutes
+Southwest Chief #3: NPV --> MDT, DEPARTED -- 7 MI LATE
+Trip Duration: 49 Minutes
+Southwest Chief #3: NPV --> MDT, DEPARTED -- 2 MI LATE
+Trip Duration: 45 Minutes
+California Zephyr #5: NPV --> MCK, SCHEDULED -- ON TIME
+Trip Duration: 13 Hours 46 Minutes
+California Zephyr #5: NPV --> MCK, DEPARTED -- 6 HR 9 MI LATE
+Trip Duration: 19 Hours 38 Minutes
+Sunset Limited #1: NOL --> NIB, DEPARTED -- 8 MI LATE
+Trip Duration: 3 Hours 3 Minutes
+City of New Orleans #58: NOL --> NBN, DEPARTED -- 8 MI LATE
+Trip Duration: 10 Hours 45 Minutes
+Crescent #20: NOL --> MSS, SCHEDULED -- ON TIME
+Trip Duration: 26 Hours 8 Minutes
+Sunset Limited #1: NOL --> MRC, SCHEDULED -- ON TIME
+Trip Duration: 36 Hours 32 Minutes
+City of New Orleans #58: NOL --> MKS, DEPARTED -- 21 MI LATE
+Trip Duration: 7 Hours 4 Minutes
+Crescent #20: NOL --> MET, SCHEDULED -- 07 MI EARLY
+Trip Duration: 30 Hours 59 Minutes
+City of New Orleans #58: NOL --> MEM, DEPARTED -- 2 MI LATE
+Trip Duration: 8 Hours 33 Minutes
+Crescent #20: NOL --> MEI, DEPARTED -- 48 MI LATE
+Trip Duration: 5 Hours 0 Minutes
+City of New Orleans #58: NOL --> MCB, DEPARTED -- 23 MI LATE
+Trip Duration: 2 Hours 8 Minutes
+Northeast Regional #67: NLC --> NHV, DEPARTED -- ON TIME
+Trip Duration: 44 Minutes
+Northeast Regional #67: NLC --> NCR, SCHEDULED -- ON TIME
+Trip Duration: 9 Hours 8 Minutes
+Northeast Regional #66: NLC --> MYS, SCHEDULED -- 13 MI LATE
+Trip Duration: 13 Minutes
+Northeast Regional #67: NLC --> MET, DEPARTED -- 7 MI LATE
+Trip Duration: 3 Hours 30 Minutes
+Sunset Limited #1: NIB --> MRC, SCHEDULED -- ON TIME
+Trip Duration: 33 Hours 28 Minutes
+Northeast Regional #67: NHV --> NCR, SCHEDULED -- ON TIME
+Trip Duration: 8 Hours 20 Minutes
+Northeast Regional #66: NHV --> MYS, SCHEDULED -- 13 MI LATE
+Trip Duration: 1 Hours 5 Minutes
+Northeast Regional #67: NHV --> MET, DEPARTED -- 7 MI LATE
+Trip Duration: 2 Hours 42 Minutes
+Southwest Chief #3: NEW --> NDL, SCHEDULED -- ON TIME
+Trip Duration: 22 Hours 57 Minutes
+Southwest Chief #3: NEW --> NDL, SCHEDULED -- 39 MI LATE
+Trip Duration: 24 Hours 5 Minutes
+Southwest Chief #4: NEW --> MDT, SCHEDULED -- ON TIME
+Trip Duration: 10 Hours 40 Minutes
+Southwest Chief #4: NEW --> MDT, SCHEDULED -- 07 MI LATE
+Trip Duration: 9 Hours 21 Minutes
+Southwest Chief #4: NDL --> MDT, SCHEDULED -- ON TIME
+Trip Duration: 34 Hours 38 Minutes
+Southwest Chief #4: NDL --> MDT, SCHEDULED -- 07 MI LATE
+Trip Duration: 34 Hours 48 Minutes
+Northeast Regional #66: NCR --> MYS, SCHEDULED -- 13 MI LATE
+Trip Duration: 9 Hours 34 Minutes
+Northeast Regional #66: NCR --> MET, DEPARTED -- 16 MI LATE
+Trip Duration: 2 Hours 35 Minutes
+City of New Orleans #59: NBN --> MKS, SCHEDULED -- 01 HR 20 MI LATE
+Trip Duration: 3 Hours 7 Minutes
+City of New Orleans #59: NBN --> MEM, SCHEDULED -- 01 HR 20 MI LATE
+Trip Duration: 1 Hours 35 Minutes
+City of New Orleans #59: NBN --> MCB, SCHEDULED -- 32 MI LATE
+Trip Duration: 6 Hours 58 Minutes
+Texas Eagle #21: MVN --> MIN, SCHEDULED -- ON TIME
+Trip Duration: 5 Hours 39 Minutes
+Texas Eagle #21: MVN --> MHL, SCHEDULED -- ON TIME
+Trip Duration: 4 Hours 4 Minutes
+Texas Eagle #21: MVN --> MCG, SCHEDULED -- ON TIME
+Trip Duration: 12 Hours 2 Minutes
+California Zephyr #6: MTZ --> MTP, SCHEDULED -- ON TIME
+Trip Duration: 46 Hours 47 Minutes
+California Zephyr #6: MTZ --> MTP, SCHEDULED -- 31 MI LATE
+Trip Duration: 47 Hours 9 Minutes
+San Joaquins #718: MTZ --> MOD, DEPARTED -- 42 MI LATE
+Trip Duration: 1 Hours 31 Minutes
+San Joaquins #718: MTZ --> MDR, DEPARTED -- 33 MI LATE
+Trip Duration: 2 Hours 45 Minutes
+California Zephyr #6: MTZ --> MCK, SCHEDULED -- ON TIME
+Trip Duration: 36 Hours 35 Minutes
+California Zephyr #6: MTZ --> MCK, DEPARTED -- 1 HR 37 MI LATE
+Trip Duration: 38 Hours 2 Minutes
+San Joaquins #718: MTZ --> MCD, DEPARTED -- 39 MI LATE
+Trip Duration: 2 Hours 10 Minutes
+California Zephyr #5: MTP --> MCK, SCHEDULED -- ON TIME
+Trip Duration: 10 Hours 9 Minutes
+California Zephyr #5: MTP --> MCK, DEPARTED -- 6 HR 9 MI LATE
+Trip Duration: 10 Hours 14 Minutes
+Cardinal #51: MSS --> MNG, DEPARTED -- 1 HR 36 MI LATE
+Trip Duration: 9 Hours 28 Minutes
+Crescent #20: MSS --> MET, SCHEDULED -- 07 MI EARLY
+Trip Duration: 4 Hours 49 Minutes
+Northeast Regional #66: MSS --> MET, DEPARTED -- 16 MI LATE
+Trip Duration: 4 Hours 39 Minutes
+Crescent #19: MSS --> MEI, SCHEDULED -- ON TIME
+Trip Duration: 19 Hours 23 Minutes
+Empire Builder #7: MSP --> MOT, SCHEDULED -- ON TIME
+Trip Duration: 9 Hours 53 Minutes
+Empire Builder #7: MSP --> MOT, DEPARTED -- 2 HR 51 MI LATE
+Trip Duration: 9 Hours 51 Minutes
+Empire Builder #8: MSP --> MKE, SCHEDULED -- 04 MI EARLY
+Trip Duration: 6 Hours 3 Minutes
+Empire Builder #8: MSP --> MKE, SCHEDULED -- 04 MI EARLY
+Trip Duration: 6 Hours 3 Minutes
+Empire Builder #8: MOT --> MKE, SCHEDULED -- 04 MI EARLY
+Trip Duration: 16 Hours 0 Minutes
+Empire Builder #8: MOT --> MKE, SCHEDULED -- 04 MI EARLY
+Trip Duration: 15 Hours 50 Minutes
+San Joaquins #718: MOD --> MDR, DEPARTED -- 33 MI LATE
+Trip Duration: 1 Hours 13 Minutes
+San Joaquins #718: MOD --> MCD, DEPARTED -- 39 MI LATE
+Trip Duration: 38 Minutes
+City of New Orleans #58: MKS --> MEM, DEPARTED -- 2 MI LATE
+Trip Duration: 1 Hours 26 Minutes
+City of New Orleans #59: MKS --> MCB, SCHEDULED -- 32 MI LATE
+Trip Duration: 3 Hours 49 Minutes
+Texas Eagle #22: MIN --> MHL, SCHEDULED -- 06 HR 46 MI LATE
+Trip Duration: 1 Hours 26 Minutes
+Texas Eagle #21: MIN --> MCG, SCHEDULED -- ON TIME
+Trip Duration: 6 Hours 20 Minutes
+Texas Eagle #21: MHL --> MCG, SCHEDULED -- ON TIME
+Trip Duration: 7 Hours 51 Minutes
+City of New Orleans #59: MEM --> MCB, SCHEDULED -- 32 MI LATE
+Trip Duration: 5 Hours 10 Minutes
+San Joaquins #703: MDR --> MCD, DEPARTED -- 7 MI LATE
+Trip Duration: 42 Minutes
+
+
+Total Duration: 1173 Hours 8 Minutes

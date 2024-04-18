@@ -36,9 +36,11 @@ public class TripViewer extends PlannerDriver implements ActionListener {
         }
         bottomSplitPane.setDividerLocation(0.5);
         operationsSplitPane.setDividerLocation(0.5);
-        saveSplitPane.setDividerLocation(0.5);
+        saveSplitPane.setDividerLocation(1); //"removal" of the preset button while maintaining Frame dimensions
+        saveSplitPane.setDividerSize(0); //"removal" of the preset button while maintaining Frame dimensions
         saveSplitPane.setPreferredSize(new Dimension(10, 10));
         saveSplitPane.setMaximumSize(new Dimension(10, 10));
+        saveThisSearchButton.setVisible(false);
         if (results.length == 0) {
             noTripsFound.setVisible(true);
             noTripsFound.setPreferredSize(new Dimension(300, 300));
@@ -77,19 +79,19 @@ public class TripViewer extends PlannerDriver implements ActionListener {
                 }
             }
         });
-        saveThisSearchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    PlannerDatabase.exportSearch(selectedStationsArray, searchDateTime);
-                } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, "Error! Unable to write to the " +
-                                    "save file. Please ensure the Amtrak Travel Planner has write privileges and " +
-                                    "then try again."
-                            , "Results Output Failure", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
+//        saveThisSearchButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try {
+//                    PlannerDatabase.exportSearchPreset(selectedStationsArray, searchDateTime);
+//                } catch (FileNotFoundException ex) {
+//                    JOptionPane.showMessageDialog(null, "Error! Unable to write to the " +
+//                                    "save file. Please ensure the Amtrak Travel Planner has write privileges and " +
+//                                    "then try again."
+//                            , "Results Output Failure", JOptionPane.ERROR_MESSAGE);
+//                }
+//            }
+//        });
         startANewSearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
