@@ -1,25 +1,40 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.time.Year;
+
+/**
+ * Amtrak Travel Planner - WelcomeScreen
+ *
+ * GUI class for the Amtrak Travel Planner's
+ * Welcome Screen.
+ *
+ * @author Ayush Shukla Arora, L19
+ *
+ * @version April 22, 2024
+ */
 
 public class WelcomeScreen extends PlannerDriver implements ActionListener {
     private JButton createANewAmtrakButton;
     private JButton loadFromASearchButton;
     private JPanel welcomePanel;
     private JLabel titleLabel;
+    private JLabel creditsLabel;
+    private JLabel internetReqd;
+    private JLabel copyright;
     private static JFrame jf;
     public WelcomeScreen() {
-        super("Amtrak Travel Planner");
-        jf = new JFrame();
+        jf = new JFrame("Amtrak Travel Planner");
         jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jf.setContentPane(welcomePanel);
         jf.setSize(640, 480);
         jf.setVisible(true);
         titleLabel.setFont(new Font("Sans Serif", Font.BOLD, 25));
+        internetReqd.setFont(new Font("Sans Serif", Font.ITALIC, 10));
+        copyright.setText("© " + Year.now().getValue() + " Ayush Shukla Arora. All Rights Reserved. ");
+        //intentional following space for padding
+        copyright.setFont(new Font(null, Font.PLAIN, 8));
 
         createANewAmtrakButton.addActionListener(new ActionListener() {
             @Override
@@ -46,19 +61,44 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
                                             + " Please check your internet connection and then try submitting again."
                                     , "Database Connection Failure", JOptionPane.ERROR_MESSAGE);
                         }
-                        TripPlanner.tripGUISearch(PlannerDatabase.loadSearch(searchFile));
+                        PlannerDatabase.createTripForGUIDisplay(PlannerDatabase.loadSearch(searchFile));
                         jf.dispose();
                     } catch (Exception ex) {
+                        ex.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Error! Unable to read the search" +
                                         " file."
-                                        + " Please ensure the file is formatted correctly and then try again." +
-                                        " Make sure to use a Search Preset file and not a Search Results file!"
+                                        + " Please ensure the file is formatted correctly and then try again."
                                 , "Search File Load Failure", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
         });
+        creditsLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                creditsLabel.setFont(new Font(null, Font.BOLD, 20));
+                creditsLabel.setForeground(Color.BLUE);
+            }
+        });
+        creditsLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                creditsLabel.setFont(new Font(null, Font.BOLD, 13));
+                creditsLabel.setForeground(Color.BLACK);
+            }
+        });
+        creditsLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                jf.dispose();
+                new CreditsScreen();
+            }
+        });
     }
+
     public static void main(String[] args) {
         jf = new WelcomeScreen();
         jf.setVisible(true);

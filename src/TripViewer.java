@@ -3,9 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.time.Year;
 
-public class TripViewer extends PlannerDriver implements ActionListener {
+public class TripViewer extends JFrame implements ActionListener {
     private static JFrame jf;
     private JPanel tripViewingPanel;
     private JLabel noTripsFound;
@@ -20,28 +20,20 @@ public class TripViewer extends PlannerDriver implements ActionListener {
     private JSplitPane bottomSplitPane;
     private JButton mainMenuButton;
     private JSplitPane operationsSplitPane;
-    private String[] results;
+    private JLabel copyright;
 
     public TripViewer(Trip trip, String[] selectedStationsArray, String searchDateTime) {
-        super("Amtrak Travel Planner: Explore Your Trip Options!");
-        jf = new JFrame();
+        jf = new JFrame("Amtrak Travel Planner: Explore Your Trip Options!");
         jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jf.setContentPane(tripViewingPanel);
         jf.setSize(640, 480);
         jf.setVisible(true);
-        ArrayList<Route> resultsArrayList = trip.getTripRoutes();
-        results = new String[resultsArrayList.size()];
-        for (int i = 0; i < results.length; i++) {
-            results[i] = resultsArrayList.get(i).toString();
-        }
         bottomSplitPane.setDividerLocation(0.5);
         operationsSplitPane.setDividerLocation(0.5);
-        saveSplitPane.setDividerLocation(1); //"removal" of the preset button while maintaining Frame dimensions
-        saveSplitPane.setDividerSize(0); //"removal" of the preset button while maintaining Frame dimensions
-        saveSplitPane.setPreferredSize(new Dimension(10, 10));
-        saveSplitPane.setMaximumSize(new Dimension(10, 10));
-        saveThisSearchButton.setVisible(false);
-        if (results.length == 0) {
+        saveSplitPane.setDividerLocation(0.5);
+        copyright.setText("© " + Year.now().getValue() + " Ayush Shukla Arora. All Rights Reserved. ");
+        copyright.setFont(new Font(null, Font.PLAIN, 8));
+        if (trip.getTripRoutes().isEmpty()) {
             noTripsFound.setVisible(true);
             noTripsFound.setPreferredSize(new Dimension(300, 300));
             noTripsFound.setHorizontalAlignment(SwingConstants.CENTER);
@@ -51,6 +43,20 @@ public class TripViewer extends PlannerDriver implements ActionListener {
             noTripsFound.setVisible(false);
             resultsTextArea.setVisible(true);
             resultsTextArea.setText("Search Timestamp: " + searchDateTime + "\n\n" + trip);
+            resultsTextArea.setCaretPosition(0);
+            String noRouteStations = "Unable to find routes for: \n";
+            boolean noRouteStationsExist = false;
+            for (String station : selectedStationsArray) {
+                if (!trip.toString().contains(station.substring(0, 3))) {
+                    noRouteStations += station + "\n";
+                    noRouteStationsExist = true;
+                }
+            }
+            noRouteStations = noRouteStations.substring(0, noRouteStations.length());
+            if (noRouteStationsExist) {
+                resultsTextArea.setText("Search Timestamp: " + searchDateTime + "\n\n" + trip + "\n\n\n" +
+                        noRouteStations);
+            }
             resultsScrollPane.setViewportView(resultsTextArea);
             resultsScrollPane.setPreferredSize(new Dimension(300, 300));
             resultsScrollPane.setVisible(true);
@@ -58,7 +64,7 @@ public class TripViewer extends PlannerDriver implements ActionListener {
         saveSearchResultsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (results.length == 0) {
+                if (trip.getTripRoutes().isEmpty()) {
                     try {
                         PlannerDatabase.exportNullResults(selectedStationsArray, searchDateTime);
                     } catch (FileNotFoundException ex) {
@@ -79,19 +85,19 @@ public class TripViewer extends PlannerDriver implements ActionListener {
                 }
             }
         });
-//        saveThisSearchButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    PlannerDatabase.exportSearchPreset(selectedStationsArray, searchDateTime);
-//                } catch (FileNotFoundException ex) {
-//                    JOptionPane.showMessageDialog(null, "Error! Unable to write to the " +
-//                                    "save file. Please ensure the Amtrak Travel Planner has write privileges and " +
-//                                    "then try again."
-//                            , "Results Output Failure", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }
-//        });
+        saveThisSearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    PlannerDatabase.exportSearchPreset(selectedStationsArray, searchDateTime);
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Error! Unable to write to the " +
+                                    "save file. Please ensure the Amtrak Travel Planner has write privileges and " +
+                                    "then try again."
+                            , "Results Output Failure", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         startANewSearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

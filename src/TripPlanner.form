@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="TripPlanner">
-  <grid id="27dc6" binding="tripPlanningPanel" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="tripPlanningPanel" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="1024" height="400"/>
@@ -15,7 +15,7 @@
         <properties>
           <horizontalAlignment value="0"/>
           <horizontalTextPosition value="0"/>
-          <text value="Choose at least two Amtrak train stations for your trip!"/>
+          <text value="Choose at least two Amtrak train stations, and at most thirty stations, for your trip!"/>
         </properties>
       </component>
       <component id="76d0c" class="javax.swing.JLabel" binding="instructionTwo">
@@ -36,8 +36,8 @@
           <alignmentX value="0.0"/>
           <alignmentY value="0.0"/>
           <continuousLayout value="false"/>
-          <dividerLocation value="14"/>
-          <lastDividerLocation value="500"/>
+          <dividerLocation value="357"/>
+          <lastDividerLocation value="298"/>
         </properties>
         <border type="none"/>
         <children>
@@ -73,6 +73,14 @@
         </constraints>
         <properties>
           <text value="Return to Main Menu"/>
+        </properties>
+      </component>
+      <component id="11fa9" class="javax.swing.JLabel" binding="copyright">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Label"/>
         </properties>
       </component>
     </children>

@@ -1,17 +1,31 @@
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+
+/**
+ * Amtrak Travel Planner - Train
+ *
+ * A Train class for the Amtrak Travel
+ * Planner, which creates a Train
+ * object from train data parsed in
+ * PlannerDatabase.
+ *
+ * @author Ayush Shukla Arora, L19
+ *
+ * @version April 22, 2024
+ */
 
 public class Train {
     private String name;
     private int number;
     private ArrayList<Station> stations;
     private ArrayList<String> stationStatuses;
-    private ArrayList<Instant> departureTimes;
-    private ArrayList<Instant> arrivalTimes;
+    private ArrayList<ZonedDateTime> departureTimes;
+    private ArrayList<ZonedDateTime> arrivalTimes;
     private ArrayList<String> remarks;
 
     public Train(String route, int number, ArrayList<Station> stations, ArrayList<String> stationStatuses,
-                 ArrayList<Instant> departureTimes, ArrayList<Instant> arrivalTimes, ArrayList<String> remarks) {
+                 ArrayList<ZonedDateTime> departureTimes, ArrayList<ZonedDateTime> arrivalTimes, ArrayList<String> remarks) {
         this.name = route;
         this.number = number;
         this.stations = stations;
@@ -53,19 +67,19 @@ public class Train {
         this.stationStatuses = stationStatuses;
     }
 
-    public ArrayList<Instant> getDepartureTimes() {
+    public ArrayList<ZonedDateTime> getDepartureTimes() {
         return departureTimes;
     }
 
-    public void setDepartureTimes(ArrayList<Instant> departureTimes) {
+    public void setDepartureTimes(ArrayList<ZonedDateTime> departureTimes) {
         this.departureTimes = departureTimes;
     }
 
-    public ArrayList<Instant> getArrivalTimes() {
+    public ArrayList<ZonedDateTime> getArrivalTimes() {
         return arrivalTimes;
     }
 
-    public void setArrivalTimes(ArrayList<Instant> arrivalTimes) {
+    public void setArrivalTimes(ArrayList<ZonedDateTime> arrivalTimes) {
         this.arrivalTimes = arrivalTimes;
     }
 

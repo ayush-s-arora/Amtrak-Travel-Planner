@@ -4,23 +4,37 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Duration;
-import java.time.Instant;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-
 import javax.swing.*;
+
+/**
+ * Amtrak Travel Planner - PlannerDatabase
+ *
+ * A PlannerDatabase class for the Amtrak Travel
+ * Planner, which connects to the Amtrak API, fetches
+ * station and train data, parses it, and stores it
+ * appropriately for use throughout the program. This
+ * class also provides Route-finding, search, and
+ * search file functionality.
+ *
+ * @author Ayush Shukla Arora, L19
+ *
+ * @version April 22, 2024
+ */
 
 public class PlannerDatabase {
     private static URL stationsURL;
     private static URL trainsURL;
     private static Station[] stations;
     private static String[] stationStrings;
+    private static ArrayList<Station> stationsArrayList =  new ArrayList<>();
     private static ArrayList<Train> trainsInDatabase = new ArrayList<>();
     private final static String searchOutputFileString = "Amtrak Travel Planner Search Preset.txt";
     private final static String resultsOutputFileString = "Amtrak Travel Planner Search Results.txt";
@@ -40,7 +54,6 @@ public class PlannerDatabase {
     }
 
     public static Station[] getTrainStations() throws IOException, ParseException {
-        ArrayList<Station> stationsArrayList = new ArrayList<>();
         HttpURLConnection connStations = (HttpURLConnection) stationsURL.openConnection();
         connStations.setRequestMethod("GET");
         connStations.connect();
@@ -127,8 +140,9 @@ public class PlannerDatabase {
                 JSONArray trainStations = (JSONArray) train.get("stations");
                 ArrayList<String> servedStationCodes = new ArrayList<>();
                 ArrayList<String> stationStatuses = new ArrayList<>();
-                ArrayList<Instant> departureTimes = new ArrayList<>();
-                ArrayList<Instant> arrivalTimes = new ArrayList<>();
+                ArrayList<ZonedDateTime> departureTimes = new ArrayList<>();
+                ArrayList<ZonedDateTime> arrivalTimes = new ArrayList<>();
+                ArrayList<String> timezones = new ArrayList<>();
                 ArrayList<String> remarks = new ArrayList<>();
                 for (int j = 0; j < trainStations.size(); j++) {
                     JSONObject stationAttributes = (JSONObject) trainStations.get(j);
@@ -136,6 +150,8 @@ public class PlannerDatabase {
                     servedStationCodes.add(stationCode);
                     String stationStatus = (String) stationAttributes.get("status");
                     stationStatuses.add(stationStatus);
+                    String timezone = (String) stationAttributes.get("timezone");
+                    timezones.add(timezone);
                     String departureTime = (String) stationAttributes.get("departureActual");
                     if (departureTime == null) {
                         departureTime = (String) stationAttributes.get("departureEstimated");
@@ -146,7 +162,7 @@ public class PlannerDatabase {
                     if (departureTime == null) {
                         departureTimes.add(null);
                     } else {
-                        departureTimes.add(Instant.parse(departureTime));
+                        departureTimes.add(ZonedDateTime.parse(departureTime));
                     }
                     String arrivalTime = (String) stationAttributes.get("arrivalActual");
                     if (arrivalTime == null) {
@@ -158,7 +174,7 @@ public class PlannerDatabase {
                     if (arrivalTime == null) {
                         arrivalTimes.add(null);
                     } else {
-                        arrivalTimes.add(Instant.parse(arrivalTime));
+                        arrivalTimes.add(ZonedDateTime.parse(arrivalTime));
                     }
                     JSONObject rawAttributes = (JSONObject) stationAttributes.get("_raw");
                     String remark = (String) rawAttributes.get("postcmnt");
@@ -171,9 +187,27 @@ public class PlannerDatabase {
                 for (String stationCode : servedStationCodes) {
                     servedStations.add(getStationfromCodeString(stationCode));
                 }
+                ArrayList<ZonedDateTime> adjustedDepartureTimes = new ArrayList<>();
+                ArrayList<ZonedDateTime> adjustedArrivalTimes = new ArrayList<>();
+                for (int k = 0; k < departureTimes.size(); k++) {
+                    if (departureTimes.get(k) != null) {
+                        ZonedDateTime departureTimeAdjusted =
+                                departureTimes.get(k).withZoneSameInstant(ZoneId.of(timezones.get(k)));
+                        adjustedDepartureTimes.add(departureTimeAdjusted);
+                    } else {
+                        adjustedDepartureTimes.add(null);
+                    }
+                    if (arrivalTimes.get(k) != null) {
+                        ZonedDateTime arrivalTimeAdjusted =
+                                arrivalTimes.get(k).withZoneSameInstant(ZoneId.of(timezones.get(k)));
+                        adjustedArrivalTimes.add(arrivalTimeAdjusted);
+                    } else {
+                        adjustedArrivalTimes.add(null);
+                    }
+                }
                 trainsInDatabase.add(
                         new Train(trainName, Math.toIntExact(trainNumber), servedStations, stationStatuses,
-                                departureTimes, arrivalTimes, remarks));
+                                adjustedDepartureTimes, adjustedArrivalTimes, remarks));
             }
         }
     }
@@ -191,11 +225,54 @@ public class PlannerDatabase {
                         int originStationIndex = train.getStations().indexOf(originStationSelection);
                         int destinationStationIndex = train.getStations().indexOf(destinationStationSelection);
                         if (originStationIndex < destinationStationIndex) {
-                            routes.add(new Route(originStationSelection, destinationStationSelection, train.getName(),
-                                    train.getNumber(), train.getStationStatuses().get(destinationStationIndex),
-                                    (Duration.between(train.getDepartureTimes().get(originStationIndex),
-                                            train.getArrivalTimes().get(destinationStationIndex))),
-                                    train.getRemarks().get(destinationStationIndex)));
+                            Route newRoute = null;
+                            if (train.getDepartureTimes().get(originStationIndex) != null
+                                && train.getArrivalTimes().get(destinationStationIndex) != null) {
+                                newRoute = new Route(originStationSelection, destinationStationSelection,
+                                        train.getName(),
+                                        train.getNumber(), train.getStationStatuses().get(originStationIndex),
+                                        train.getStationStatuses().get(destinationStationIndex),
+                                        train.getDepartureTimes().get(originStationIndex),
+                                        train.getArrivalTimes().get(destinationStationIndex),
+                                        (Duration.between(train.getDepartureTimes().get(originStationIndex),
+                                                train.getArrivalTimes().get(destinationStationIndex))),
+                                        train.getRemarks().get(destinationStationIndex));
+                            } else if (train.getDepartureTimes().get(originStationIndex) == null) { //last station
+                                newRoute = new Route(originStationSelection, destinationStationSelection,
+                                        train.getName(),
+                                        train.getNumber(), train.getStationStatuses().get(originStationIndex),
+                                        train.getStationStatuses().get(destinationStationIndex),
+                                        null,
+                                        train.getArrivalTimes().get(destinationStationIndex),
+                                        null,
+                                        train.getRemarks().get(destinationStationIndex));
+                            } else if (train.getArrivalTimes().get(destinationStationIndex) == null) { //first station
+                                newRoute = new Route(originStationSelection, destinationStationSelection,
+                                        train.getName(),
+                                        train.getNumber(), train.getStationStatuses().get(originStationIndex),
+                                        train.getStationStatuses().get(destinationStationIndex),
+                                        train.getDepartureTimes().get(originStationIndex),
+                                        null,
+                                        null,
+                                        train.getRemarks().get(destinationStationIndex));
+                            }
+                            if (routes.isEmpty()) {
+                                routes.add(newRoute);
+                            }
+                            boolean repeatRoute = false;
+                            for (Route route : routes) {
+                                assert newRoute != null;
+                                if ((newRoute.getOrigin().equals(route.getOrigin()) &&
+                                        newRoute.getDestination().equals(route.getDestination()) &&
+                                        newRoute.getDepartureTime().equals(route.getDepartureTime()) &&
+                                        newRoute.getArrivalTime().equals(route.getArrivalTime()))) {
+                                    repeatRoute = true;
+                                    break;
+                                }
+                            }
+                            if (!repeatRoute) {
+                                routes.add(newRoute);
+                            }
                         }
                     }
                 }
@@ -238,27 +315,27 @@ public class PlannerDatabase {
                 , "Results Output Successful", JOptionPane.INFORMATION_MESSAGE);
     }
 
-//    public static void exportSearchPreset(String[] selectedStationsArray, String searchDateTime)
-//            throws FileNotFoundException {
-//        FileOutputStream fos = new FileOutputStream(searchOutputFileString);
-//        PrintWriter pw = new PrintWriter(fos);
-//        pw.println("Amtrak Travel Planner Search Preset " + "[Search Timestamp: " + searchDateTime + "]");
-//        pw.println("-----");
-//        for (String stationString : selectedStationsArray) {
-//            pw.println(stationString);
-//        }
-//        pw.close();
-//        Path filePath = Paths.get(searchOutputFileString);
-//        JOptionPane.showMessageDialog(null, "Save successful! File saved to " + filePath + "."
-//                , "Search Preset File Output Successful", JOptionPane.INFORMATION_MESSAGE);
-//    }
+    public static void exportSearchPreset(String[] selectedStationsArray, String searchDateTime)
+            throws FileNotFoundException {
+        FileOutputStream fos = new FileOutputStream(searchOutputFileString);
+        PrintWriter pw = new PrintWriter(fos);
+        pw.println("Amtrak Travel Planner Search Preset " + "[Search Timestamp: " + searchDateTime + "]");
+        pw.println("-----");
+        for (String stationString : selectedStationsArray) {
+            pw.println(stationString);
+        }
+        pw.close();
+        Path filePath = Paths.get(searchOutputFileString);
+        JOptionPane.showMessageDialog(null, "Save successful! File saved to " + filePath + "."
+                , "Search Preset File Output Successful", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     public static String[] loadSearch(File searchFile) throws Exception {
         ArrayList<String> searchedStations = new ArrayList<>();
         FileReader fr = new FileReader(searchFile);
         BufferedReader bfr = new BufferedReader(fr);
         String line = bfr.readLine();
-        if (!(line.contains("Amtrak Travel Planner Search Results"))) {
+        if (!(line.contains("Amtrak Travel Planner Search "))) {
             throw new Exception();
         }
         line = bfr.readLine();
@@ -267,14 +344,25 @@ public class PlannerDatabase {
         }
         line = bfr.readLine();
         while (line != null) {
-            searchedStations.add(line);
-            line = bfr.readLine();
+            if (stationsArrayList.contains(getStationfromString(line))) {
+                searchedStations.add(line);
+                line = bfr.readLine();
+            } else {
+                break;
+                //will pick up station strings while omitting results, should the user load a results file
+            }
         }
         String[] searchedStationsArray = new String[searchedStations.size()];
         for (int i = 0; i < searchedStations.size(); i++) {
             searchedStationsArray[i] = searchedStations.get(i);
         }
         return searchedStationsArray;
+    }
+    public static void createTripForGUIDisplay(String[] stations) throws IOException, ParseException {
+        Trip userTrip = new Trip(PlannerDatabase.findRoutesFromStationList(stations));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        new TripViewer(userTrip, stations, formatter.format(currentDateTime));
     }
 
     //for testing

@@ -1,15 +1,25 @@
-import org.json.simple.parser.ParseException;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.lang.reflect.Array;
+import java.time.Year;
 import java.util.ArrayList;
 
-public class TripPlanner extends PlannerDriver implements ActionListener {
+/**
+ * Amtrak Travel Planner - TripPlanner
+ *
+ * GUI class for the Amtrak Travel Planner's
+ * Trip Planner Screen, where the user selects
+ * stations.
+ *
+ * @author Ayush Shukla Arora, L19
+ *
+ * @version April 22, 2024
+ */
+
+public class TripPlanner extends JFrame implements ActionListener {
 
     private JLabel instructionOne;
     private JLabel instructionTwo;
@@ -19,16 +29,18 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
     private JScrollPane selectedStationsPane;
     private JButton exploreTravelOptionsButton;
     private JButton returnToMainMenuButton;
+    private JLabel copyright;
     private String[] selectedStationsArray;
     private static JFrame jf;
 
     public TripPlanner() {
-        super("Amtrak Travel Planner: Plan your Trip!");
-        jf = new JFrame();
+        jf = new JFrame("Amtrak Travel Planner: Plan your Trip!");
         jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jf.setContentPane(tripPlanningPanel);
         jf.setSize(640, 480);
         jf.setVisible(true);
+        copyright.setText("© " + Year.now().getValue() + " Ayush Shukla Arora. All Rights Reserved. ");
+        copyright.setFont(new Font(null, Font.PLAIN, 8));
         JList<String> trainStations = null;
         try {
             trainStations = new JList<>(PlannerDatabase.getTrainStationStrings());
@@ -38,14 +50,14 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
             jf.dispose();
             new WelcomeScreen();
         }
+        final JList<String> finalTrainStations = trainStations;
         exploreTravelOptionsButton.setVisible(false);
         jSplitPane.setDividerLocation(0.5);
         stationSelector.setViewportView(trainStations);
-        ArrayList<String> selectedStationsArrayList = new ArrayList();
-        assert trainStations != null;
-        JList<String> finalTrainStations = trainStations;
+        ArrayList<String> selectedStationsArrayList = new ArrayList<>();
+        assert finalTrainStations != null;
         final String[] selectedStation = {null};
-        trainStations.addListSelectionListener(new ListSelectionListener() {
+        finalTrainStations.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -74,8 +86,9 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
                 }
             }
         });
-        trainStations.addMouseListener(new MouseAdapter() {
+        finalTrainStations.addMouseListener(new MouseAdapter() {
             int lastSelectionIndex;
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 int index = finalTrainStations.locationToIndex(e.getPoint());
@@ -101,11 +114,11 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    tripGUISearch(selectedStationsArray);
+                    PlannerDatabase.createTripForGUIDisplay(selectedStationsArray);
                     jf.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Error! Unable to connect to database."
-                            + " Please check your internet connection and then try submitting again."
+                                    + " Please check your internet connection and try submitting again."
                             , "Database Connection Failure", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -118,12 +131,7 @@ public class TripPlanner extends PlannerDriver implements ActionListener {
             }
         });
     }
-    public static void tripGUISearch(String[] stations) throws IOException, ParseException {
-        Trip userTrip = new Trip(PlannerDatabase.findRoutesFromStationList(stations));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        new TripViewer(userTrip, stations, formatter.format(currentDateTime));
-    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
