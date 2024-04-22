@@ -2,8 +2,10 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.*;
-import java.lang.reflect.Array;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.Year;
 import java.util.ArrayList;
 
@@ -45,8 +47,9 @@ public class TripPlanner extends JFrame implements ActionListener {
         try {
             trainStations = new JList<>(PlannerDatabase.getTrainStationStrings());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error! Unable to connect to database." +
-                    " Returning to welcome screen...", "Database Connection Failure", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error! Unable to connect to the database." +
+                    " Returning to the welcome screen...", "Database Connection Failure",
+                    JOptionPane.ERROR_MESSAGE);
             jf.dispose();
             new WelcomeScreen();
         }
@@ -117,8 +120,8 @@ public class TripPlanner extends JFrame implements ActionListener {
                     PlannerDatabase.createTripForGUIDisplay(selectedStationsArray);
                     jf.dispose();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error! Unable to connect to database."
-                                    + " Please check your internet connection and try submitting again."
+                    JOptionPane.showMessageDialog(null, "Error! Unable to connect to the " +
+                                    "database. Please check your internet connection and try submitting again."
                             , "Database Connection Failure", JOptionPane.ERROR_MESSAGE);
                 }
             }

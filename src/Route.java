@@ -1,6 +1,7 @@
-import java.time.*;
+import java.time.Duration;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 
 /**
  * Amtrak Travel Planner - Duration
@@ -162,31 +163,80 @@ public class Route {
             String startingStringComponent = trainName + " #" + trainNumber + ": " + origin.getCode() + " ("
                     + formatTime(departureTime) + ") --> "
                     + destination.getCode() + " (" + formatTime(arrivalTime) + ")\n";
-            String endingStringComponent = " -- " + remark + "\nTrip Duration: " + formatDuration(duration);
-            String output = "";
-            if (Duration.between(arrivalTime, localTime).toHours() > 24 ||
-                    Duration.between(departureTime, localTime).toHours() > 24) {
-                output += startingStringComponent + "\n" + formatDate(departureTime) + "–" + formatDate(arrivalTime);
+            String endingStringComponent;
+            if (remark == null) {
+                endingStringComponent = "\nTrip Duration: " + formatDuration(duration);
+            } else {
+                endingStringComponent = " -- " + remark + "\nTrip Duration: " + formatDuration(duration);
             }
-            if (originStationStatus.equalsIgnoreCase("scheduled")) {
-                output += startingStringComponent +
-                        originStationStatus.toUpperCase() + " to Depart in " +
-                        formatDuration(Duration.between(localTime, departureTime)) +
-                        "\n" + destinationStationStatus.toUpperCase() + " to Arrive in " +
-                        formatDuration(Duration.between(localTime, arrivalTime)) +
-                        endingStringComponent;
+            String output = "";
+            if (destinationStationStatus.equalsIgnoreCase("enroute")) {
+                if (originStationStatus.equalsIgnoreCase("enroute")) {
+                    output += startingStringComponent +
+                            originStationStatus.toUpperCase() + " for " +
+                            formatDuration(Duration.between(localTime, departureTime).abs()) +
+                            "\n" + destinationStationStatus.toUpperCase() + " for " +
+                            formatDuration(Duration.between(arrivalTime, localTime).abs()) +
+                            endingStringComponent;
+                } else if (originStationStatus.equalsIgnoreCase("departed")) {
+                    output += startingStringComponent +
+                            originStationStatus.toUpperCase() + " " +
+                            formatDuration(Duration.between(departureTime, localTime).abs()) + " ago" +
+                            "\n" + destinationStationStatus.toUpperCase() + " for " +
+                            formatDuration(Duration.between(arrivalTime, localTime).abs()) +
+                            endingStringComponent;
+                }
             } else if (destinationStationStatus.equalsIgnoreCase("arrived")) {
-                output += startingStringComponent +
-                        destinationStationStatus.toUpperCase() + " " +
-                        formatDuration(Duration.between(arrivalTime, localTime)) + " ago" +
-                        endingStringComponent;
-            } else if (destinationStationStatus.equalsIgnoreCase("enroute")) {
-                output += startingStringComponent +
-                        originStationStatus.toUpperCase() + " " +
-                        formatDuration(Duration.between(departureTime, localTime)) + " ago " +
-                        "\n" + destinationStationStatus.toUpperCase() + " and Expected to Arrive in " +
-                        formatDuration(Duration.between(localTime, arrivalTime)) +
-                        endingStringComponent;
+                if (originStationStatus.equalsIgnoreCase("arrived")) {
+                    output += startingStringComponent +
+                            originStationStatus.toUpperCase() + " " +
+                            formatDuration(Duration.between(localTime, departureTime).abs()) + " ago" +
+                            "\n" + destinationStationStatus.toUpperCase() + " " +
+                            formatDuration(Duration.between(localTime, arrivalTime).abs()) + " ago" +
+                            endingStringComponent;
+                } else if (originStationStatus.equalsIgnoreCase("departed")) {
+                    output += startingStringComponent +
+                            originStationStatus.toUpperCase() + " " +
+                            formatDuration(Duration.between(departureTime, localTime).abs()) + " ago" +
+                            "\n" + destinationStationStatus.toUpperCase() + " " +
+                            formatDuration(Duration.between(arrivalTime, localTime).abs()) + " ago" +
+                            endingStringComponent;
+                }
+            } else if (destinationStationStatus.equalsIgnoreCase("scheduled")) {
+                if (originStationStatus.equalsIgnoreCase("scheduled")) {
+                    output += startingStringComponent +
+                            originStationStatus.toUpperCase() + " to Depart in " +
+                            formatDuration(Duration.between(localTime, departureTime).abs()) +
+                            "\n" + destinationStationStatus.toUpperCase() + " to Arrive in " +
+                            formatDuration(Duration.between(localTime, arrivalTime).abs()) +
+                            endingStringComponent;
+                } else if (originStationStatus.equalsIgnoreCase("enroute")) {
+                    output += startingStringComponent +
+                            originStationStatus.toUpperCase() + " for " +
+                            formatDuration(Duration.between(localTime, departureTime).abs()) +
+                            "\n" + destinationStationStatus.toUpperCase() + " to Arrive in " +
+                            formatDuration(Duration.between(localTime, arrivalTime).abs()) +
+                            endingStringComponent;
+                } else if (originStationStatus.equalsIgnoreCase("departed")) {
+                    output += startingStringComponent +
+                            originStationStatus.toUpperCase() + " " +
+                            formatDuration(Duration.between(departureTime, localTime).abs()) + " ago" +
+                            "\n" + destinationStationStatus.toUpperCase() + " to Arrive in " +
+                            formatDuration(Duration.between(localTime, arrivalTime).abs()) +
+                            endingStringComponent;
+                }
+            } else if (destinationStationStatus.equalsIgnoreCase("departed")) {
+                if (originStationStatus.equalsIgnoreCase("departed")) {
+                    output += startingStringComponent +
+                            originStationStatus.toUpperCase() + " " +
+                            formatDuration(Duration.between(departureTime, localTime).abs()) + " ago" +
+                            "\n" + destinationStationStatus.toUpperCase() + " " +
+                            formatDuration(Duration.between(arrivalTime, localTime).abs()) + " ago" +
+                            endingStringComponent;
+                }
+            }
+            if (duration.toHours() >= 24) {
+                output += "\n" + formatDate(departureTime) + "–" + formatDate(arrivalTime);
             }
                 return output;
             } else {

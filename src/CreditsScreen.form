@@ -66,7 +66,7 @@
       </component>
       <splitpane id="261e7" binding="sourcesSplitPane">
         <constraints>
-          <grid row="33" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="33" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="20" height="20"/>
           </grid>
         </constraints>
@@ -78,7 +78,7 @@
               <splitpane position="left"/>
             </constraints>
             <properties>
-              <maximumSize width="250" height="250"/>
+              <maximumSize width="300" height="300"/>
               <minimumSize width="50" height="50"/>
             </properties>
           </component>
@@ -87,7 +87,7 @@
               <splitpane position="right"/>
             </constraints>
             <properties>
-              <maximumSize width="400" height="400"/>
+              <maximumSize width="300" height="300"/>
               <minimumSize width="50" height="50"/>
             </properties>
           </component>
@@ -95,7 +95,7 @@
       </splitpane>
       <splitpane id="d97e8" binding="socialsSplitPane">
         <constraints>
-          <grid row="34" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="34" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="200" height="200"/>
           </grid>
         </constraints>
@@ -124,7 +124,7 @@
       </splitpane>
       <component id="ca01f" class="javax.swing.JButton" binding="mainMenu">
         <constraints>
-          <grid row="35" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="35" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Return to Main Menu"/>

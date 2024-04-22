@@ -33,7 +33,7 @@
             </constraints>
             <properties>
               <font name="Inter" size="3" style="0"/>
-              <text value="Requires an active internet connection"/>
+              <text value="Requires an active Internet connection"/>
             </properties>
           </component>
           <vspacer id="468cf">

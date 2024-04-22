@@ -23,11 +23,14 @@ public class TripViewer extends JFrame implements ActionListener {
     private JLabel copyright;
 
     public TripViewer(Trip trip, String[] selectedStationsArray, String searchDateTime) {
-        jf = new JFrame("Amtrak Travel Planner: Explore Your Trip Options!");
+        jf = new JFrame("Amtrak Travel Planner: Explore Your Trip!");
         jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jf.setContentPane(tripViewingPanel);
         jf.setSize(640, 480);
         jf.setVisible(true);
+        JFrame jfSelectedStations = new JFrame();
+        jfSelectedStations.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        jfSelectedStations.setVisible(false);
         bottomSplitPane.setDividerLocation(0.5);
         operationsSplitPane.setDividerLocation(0.5);
         saveSplitPane.setDividerLocation(0.5);
@@ -41,9 +44,9 @@ public class TripViewer extends JFrame implements ActionListener {
             resultsScrollPane.setVisible(false);
         } else {
             noTripsFound.setVisible(false);
+            resultsScrollPane.setVisible(true);
             resultsTextArea.setVisible(true);
             resultsTextArea.setText("Search Timestamp: " + searchDateTime + "\n\n" + trip);
-            resultsTextArea.setCaretPosition(0);
             String noRouteStations = "Unable to find routes for: \n";
             boolean noRouteStationsExist = false;
             for (String station : selectedStationsArray) {
@@ -52,14 +55,15 @@ public class TripViewer extends JFrame implements ActionListener {
                     noRouteStationsExist = true;
                 }
             }
-            noRouteStations = noRouteStations.substring(0, noRouteStations.length());
+            noRouteStations = noRouteStations.substring(0, noRouteStations.length() - 1);
             if (noRouteStationsExist) {
                 resultsTextArea.setText("Search Timestamp: " + searchDateTime + "\n\n" + trip + "\n\n\n" +
                         noRouteStations);
             }
             resultsScrollPane.setViewportView(resultsTextArea);
             resultsScrollPane.setPreferredSize(new Dimension(300, 300));
-            resultsScrollPane.setVisible(true);
+            resultsTextArea.setSelectionStart(0);
+            resultsTextArea.setSelectionEnd(0);
         }
         saveSearchResultsButton.addActionListener(new ActionListener() {
             @Override
@@ -101,6 +105,7 @@ public class TripViewer extends JFrame implements ActionListener {
         startANewSearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                jfSelectedStations.dispose();
                 jf.dispose();
                 new TripPlanner();
             }
@@ -113,13 +118,13 @@ public class TripViewer extends JFrame implements ActionListener {
                                 " Planner!"
                         , "Exit", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                         options, options[0]);
+                jfSelectedStations.dispose();
                 jf.dispose();
             }
         });
         viewSelectedStationsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame jfSelectedStations = new JFrame();
                 jfSelectedStations.setSize(200, 400);
                 JScrollPane selectedStationsPanel = new JScrollPane();
                 JList<String> selectedStations = new JList<>(selectedStationsArray);
@@ -131,6 +136,7 @@ public class TripViewer extends JFrame implements ActionListener {
         mainMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                jfSelectedStations.dispose();
                 jf.dispose();
                 new WelcomeScreen();
             }

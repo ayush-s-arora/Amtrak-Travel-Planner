@@ -1,18 +1,22 @@
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import javax.swing.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import javax.swing.*;
 
 /**
  * Amtrak Travel Planner - PlannerDatabase
@@ -264,8 +268,7 @@ public class PlannerDatabase {
                                 assert newRoute != null;
                                 if ((newRoute.getOrigin().equals(route.getOrigin()) &&
                                         newRoute.getDestination().equals(route.getDestination()) &&
-                                        newRoute.getDepartureTime().equals(route.getDepartureTime()) &&
-                                        newRoute.getArrivalTime().equals(route.getArrivalTime()))) {
+                                        newRoute.getTrainNumber() == (route.getTrainNumber()))) {
                                     repeatRoute = true;
                                     break;
                                 }

@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.time.Year;
 
@@ -57,8 +60,8 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
                             PlannerDatabase.storeTrains();
                         } catch (Exception ex) {
                             JOptionPane.showMessageDialog(null,
-                                    "Error! Unable to connect to database."
-                                            + " Please check your internet connection and then try submitting again."
+                                    "Error! Unable to connect to the database."
+                                            + " Please check your internet connection and try submitting again."
                                     , "Database Connection Failure", JOptionPane.ERROR_MESSAGE);
                         }
                         PlannerDatabase.createTripForGUIDisplay(PlannerDatabase.loadSearch(searchFile));
@@ -78,7 +81,6 @@ public class WelcomeScreen extends PlannerDriver implements ActionListener {
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 creditsLabel.setFont(new Font(null, Font.BOLD, 20));
-                creditsLabel.setForeground(Color.BLUE);
             }
         });
         creditsLabel.addMouseListener(new MouseAdapter() {
