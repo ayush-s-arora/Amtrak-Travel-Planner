@@ -25,9 +25,9 @@ not have been possible.
 - View the total travel time of all routes in your trip (all routes determined from your station selections)
 - Print searched stations or search results to a text file ("Search File")
 - Read a search from an existing Search File
-  ![The Amtrak Travel Planner's Welcome Screen](/Amtrak%20Travel%20Planner%20Welcome%20Screen.png "Amtrak Travel Planner Welcome Screen")
-  ![The Amtrak Travel Planner's station selection functionality](/Amtrak%20Travel%20Planner%20Create%20a%20New%20Amtrak%20Trip.png "Amtrak Travel Planner Create a New Amtrak Trip")
-  ![A demonstration of the Amtrak Travel Planner's trip generation functionality with 5 stations as input](/Amtrak%20Travel%20Planner%20Sample%20Trip.png "Amtrak Travel Planner Sample Trip")
+<img src="/Amtrak%20Travel%20Planner%20Welcome%20Screen.png" alt="The Amtrak Travel Planner's Welcome Screen" width="50%" title="Amtrak Travel Planner Welcome Screen">
+<img src="/Amtrak%20Travel%20Planner%20Create%20a%20New%20Amtrak%20Trip.png" alt="The Amtrak Travel Planner's station selection functionality" width="50%" title="Amtrak Travel Planner Create a New Amtrak Trip">
+<img src="/Amtrak%20Travel%20Planner%20Sample%20Trip.png" alt="A demonstration of the Amtrak Travel Planner's trip generation functionality with 5 stations as input" width="50%" title="Amtrak Travel Planner Sample Trip">
 
 ## How to Run
 1. Download and run the [.jar](AmtrakTravelPlanner-v.1.0.0.jar) executable
