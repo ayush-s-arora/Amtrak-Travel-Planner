@@ -29,6 +29,10 @@ not have been possible.
   ![The Amtrak Travel Planner's station selection functionality](Amtrak Travel Planner Create a New Amtrak Trip.png "Amtrak Travel Planner Create a New Amtrak Trip")
   ![A demonstration of the Amtrak Travel Planner's trip generation functionality with 5 stations as input](Amtrak Travel Planner Sample Trip.png "Amtrak Travel Planner Sample Trip")
 
+## How to Run
+1. Download and run the [.jar](AmtrakTravelPlanner-v.1.0.0.jar) executable
+2. Clone this project and compile
+
 ## Methods & Technologies
 - Complex GUIs with Action Listeners in Java Swing
   - Composed with IntelliJ Swing UI Designer
@@ -40,6 +44,7 @@ not have been possible.
 - BufferedReader
 - Time Package
 ## Credits
+- Amtrak Travel Planner v.1.0.0
 - Created by Ayush Shukla Arora
 - Purdue University
 - April 11, 2024-April 22, 2024
