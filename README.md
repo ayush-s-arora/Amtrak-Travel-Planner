@@ -31,7 +31,7 @@ not have been possible.
 
 ## How to Run
 2 Options:
-1. Download and run the [.jar](AmtrakTravelPlanner-v.1.0.0.jar) executable
+1. Download and run the [.jar executable](AmtrakTravelPlanner-v.1.0.0.jar)
 2. Clone this project and run [PlannerDriver.java](src/PlannerDriver.java)
 
 ## Methods & Technologies
