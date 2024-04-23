@@ -30,8 +30,9 @@ not have been possible.
 <img src="/Amtrak%20Travel%20Planner%20Sample%20Trip.png" alt="A demonstration of the Amtrak Travel Planner's trip generation functionality with 5 stations as input" width="50%" title="Amtrak Travel Planner Sample Trip">
 
 ## How to Run
+2 Options:
 1. Download and run the [.jar](AmtrakTravelPlanner-v.1.0.0.jar) executable
-2. Clone this project and compile
+2. Clone this project and run [PlannerDriver.java](src/PlannerDriver.java)
 
 ## Methods & Technologies
 - Complex GUIs with Action Listeners in Java Swing
