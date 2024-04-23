@@ -17,7 +17,7 @@ not have been possible.
 ## Features
 - View which Amtrak trains are available, if any, between two cities in the itinerary
   - If there's no route available, the GUI will make that clear
-  - An itinerary supports as few as 2 stations or as many as all 558 supported stations!
+  - An itinerary supports as few as 2 stations or as many as all 558 stations in the database!
 - Explore train statuses relative to stations
   - Departed, Arrived, Enroute, or Scheduled
 - Study the duration of an Amtrak ride between two cities
