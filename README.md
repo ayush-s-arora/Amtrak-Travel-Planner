@@ -6,7 +6,7 @@ stations. It also provides valuable timetables (database source updates every 20
 routes presented to the user. A full feature list is available [below](#features).
 
 ## Motivation
-1. I love traveling, transit, and just about everything to do with those subjects (maps, timetables, etc.)
+1. I love traveling, transit, and just about everything to do with those subjects (maps, timetables, etc.).
 2. Over the years, I've realized that there's not a great way to view multiple different Amtrak routes and their current
 statuses (Amtrak's proprietary service *exists*, but it's not my favorite).
 So, this assignment gave me a great opportunity to try and change that!
